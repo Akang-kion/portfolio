@@ -801,6 +801,36 @@
 
   <p class="gallery-hint reveal">← 左右滑动浏览更多 →</p>
 </section>
+<!-- VIDEO -->
+<section class="video-section">
+    <div class="reveal">
+        <p class="section-label">Video Works</p>
+        <h2 class="section-title">视频作品</h2>
+    </div>
+    <div class="video-strip reveal">
+        <div class="video-card">
+            <video src="./image/video1.mp4" muted loop playsinline preload="metadata"></video>
+            <p class="video-card-title">作品一</p>
+        </div>
+        <div class="video-card">
+            <video src="./image/video2.mp4" muted loop playsinline preload="metadata"></video>
+            <p class="video-card-title">作品二</p>
+        </div>
+        <div class="video-card">
+            <video src="./image/video3.mp4" muted loop playsinline preload="metadata"></video>
+            <p class="video-card-title">作品三</p>
+        </div>
+        <div class="video-card">
+            <video src="./image/video4.mp4" muted loop playsinline preload="metadata"></video>
+            <p class="video-card-title">作品四</p>
+        </div>
+        <div class="video-card">
+            <video src="./image/video5.mp4" muted loop playsinline preload="metadata"></video>
+            <p class="video-card-title">作品五</p>
+        </div>
+    </div>
+    <p class="video-hint">← 左右滑动浏览更多 →</p>
+</section>
 
 <!-- JOURNEY -->
 <section id="journey">
@@ -1146,6 +1176,16 @@ document.querySelectorAll('.video-card').forEach(card => {
                     <dd data-item="size"></dd>
                   </dl>
                 </footer>
+                <script>
+document.querySelectorAll('.video-card').forEach(card => {
+    const video = card.querySelector('video');
+    card.addEventListener('mouseenter', () => { video.play(); });
+    card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    card.addEventListener('touchstart', () => {
+        if (video.paused) { video.play(); } else { video.pause(); }
+    });
+});
+</script>
               </article>
             </div>
             <figcaption class="photoshow__image-info">
