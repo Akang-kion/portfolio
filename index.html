@@ -794,9 +794,9 @@
   /* ─── SCROLL REVEAL ─── */
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(24px);
+    transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 1s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .reveal.visible {
@@ -804,10 +804,33 @@
     transform: translateY(0);
   }
 
+  /* Staggered reveal for child items */
+  .reveal.visible .expertise-item,
+  .reveal.visible .work-item,
+  .reveal.visible .project-card,
+  .reveal.visible .skill-item {
+    opacity: 0;
+    animation: revealItem 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+  .reveal.visible .expertise-item:nth-child(1), .reveal.visible .work-item:nth-child(1), .reveal.visible .project-card:nth-child(1), .reveal.visible .skill-item:nth-child(1) { animation-delay: 0.05s; }
+  .reveal.visible .expertise-item:nth-child(2), .reveal.visible .work-item:nth-child(2), .reveal.visible .project-card:nth-child(2), .reveal.visible .skill-item:nth-child(2) { animation-delay: 0.1s; }
+  .reveal.visible .expertise-item:nth-child(3), .reveal.visible .work-item:nth-child(3), .reveal.visible .project-card:nth-child(3), .reveal.visible .skill-item:nth-child(3) { animation-delay: 0.15s; }
+  .reveal.visible .expertise-item:nth-child(4), .reveal.visible .work-item:nth-child(4), .reveal.visible .project-card:nth-child(4), .reveal.visible .skill-item:nth-child(4) { animation-delay: 0.2s; }
+  .reveal.visible .expertise-item:nth-child(5), .reveal.visible .work-item:nth-child(5), .reveal.visible .project-card:nth-child(5) { animation-delay: 0.25s; }
+  .reveal.visible .project-card:nth-child(6) { animation-delay: 0.3s; }
+  .reveal.visible .project-card:nth-child(7) { animation-delay: 0.35s; }
+  .reveal.visible .project-card:nth-child(8) { animation-delay: 0.4s; }
+  .reveal.visible .project-card:nth-child(9) { animation-delay: 0.45s; }
+
+  @keyframes revealItem {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* ─── RESPONSIVE ─── */
   /* ─── SKILLS ─── */
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-  .skill-category h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--ink); display: inline-block; padding: 0.3rem 0.9rem; background: var(--accent-soft); border-radius: 4px; border-left: 3px solid var(--accent); }
+  .skill-category h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--ink); display: inline-flex; align-items: center; padding: 0.35rem 1rem 0.35rem 0.8rem; background: var(--accent-soft); border-radius: 6px; border-left: 3px solid var(--accent); }
   .skill-item { margin-bottom: 1rem; }
   .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
   .skill-name { font-family: 'Noto Serif SC', serif; font-size: 0.95rem; font-weight: 500; }
@@ -821,7 +844,7 @@
     border: 1px solid var(--divider);
     border-radius: 100px;
     cursor: default;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
   }
@@ -832,7 +855,10 @@
     box-shadow: 0 4px 16px oklch(0.50 0.16 25 / 0.12);
   }
   .skill-capsule:active {
-    transform: translateX(2px) scale(0.98);
+    background: oklch(0.82 0.08 50);
+    border-color: oklch(0.45 0.14 25);
+    transform: translateX(2px) scale(0.97);
+    box-shadow: 0 2px 8px oklch(0.50 0.16 25 / 0.15);
   }
   .skill-capsule-name {
     font-family: 'Noto Serif SC', serif;
@@ -1418,7 +1444,7 @@ section + section {
   </div>
   <div class="skills-grid reveal">
     <div class="skill-category">
-      <h3>视频制作</h3>
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px;opacity:0.7"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>视频制作</h3>
       <div class="skill-item">
         <div class="skill-capsule">
           <span class="skill-capsule-name">Premiere Pro</span>
@@ -1449,7 +1475,7 @@ section + section {
       </div>
     </div>
     <div class="skill-category">
-      <h3>平面设计</h3>
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px;opacity:0.7"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>平面设计</h3>
       <div class="skill-item">
         <div class="skill-capsule">
           <span class="skill-capsule-name">Photoshop</span>
@@ -1801,7 +1827,7 @@ section + section {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   document.querySelector('.back-top').addEventListener('click', (e) => {
@@ -2013,18 +2039,36 @@ navItems.forEach(a => {
   });
 });
 
-// Scroll: responsive active tracking
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navItems.forEach(a => a.classList.remove('active'));
-      const id = entry.target.id;
-      const link = document.querySelector(`.nav-links a[href="#${id}"]`);
-      if (link) link.classList.add('active');
+// Scroll: find which section occupies the most viewport space
+function updateActiveNav() {
+  let bestId = null;
+  let bestArea = 0;
+  const vh = window.innerHeight;
+  const navH = 64;
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    const top = Math.max(rect.top, navH);
+    const bottom = Math.min(rect.bottom, vh);
+    const area = Math.max(0, bottom - top);
+    if (area > bestArea) {
+      bestArea = area;
+      bestId = sec.id;
     }
   });
-}, { threshold: 0.1, rootMargin: '-60px 0px -65% 0px' });
-sections.forEach(s => navObserver.observe(s));
+  if (bestId) {
+    navItems.forEach(a => a.classList.remove('active'));
+    const link = document.querySelector(`.nav-links a[href="#${bestId}"]`);
+    if (link) link.classList.add('active');
+  }
+}
+let navTicking = false;
+window.addEventListener('scroll', () => {
+  if (!navTicking) {
+    requestAnimationFrame(() => { updateActiveNav(); navTicking = false; });
+    navTicking = true;
+  }
+}, { passive: true });
+updateActiveNav();
 </script>
 
 </body>
