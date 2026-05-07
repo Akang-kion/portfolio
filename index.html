@@ -717,14 +717,7 @@
     position: relative;
   }
 
-  .contact-section::before {
-    content: '';
-    display: block;
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, var(--divider));
-    margin: 0 auto 2rem;
-  }
+  /* decorative line removed */
 
   .contact-grid {
     display: flex;
@@ -1173,6 +1166,9 @@
 /* ─── SECTION SEPARATOR ─── */
 section + section {
   border-top: 1px solid oklch(0.93 0.005 80);
+}
+.contact-section {
+  border-top: none !important;
 }
 </style>
 </head>
