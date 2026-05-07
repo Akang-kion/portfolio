@@ -229,7 +229,7 @@
 
   /* ─── SECTIONS ─── */
   section {
-    padding: clamp(4rem, 10vw, 10rem) clamp(2rem, 8vw, 10rem);
+    padding: clamp(5rem, 12vw, 12rem) clamp(2rem, 8vw, 10rem);
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -319,7 +319,7 @@
 
   .philosophy-quote {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 300;
+    font-weight: 700;
     font-size: clamp(1.8rem, 4vw, 3.2rem);
     line-height: 1.9;
     max-width: 700px;
@@ -794,9 +794,9 @@
   /* ─── SCROLL REVEAL ─── */
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1),
-                transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateY(32px);
+    transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .reveal.visible {
@@ -830,7 +830,8 @@
   /* ─── RESPONSIVE ─── */
   /* ─── SKILLS ─── */
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-  .skill-category h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--ink); display: inline-flex; align-items: center; padding: 0.35rem 1rem 0.35rem 0.8rem; background: var(--accent-soft); border-radius: 6px; border-left: 3px solid var(--accent); }
+  .skill-category h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--ink); display: inline-flex; align-items: center; padding: 0.45rem 1.2rem 0.45rem 0.9rem; background: var(--accent-soft); border-radius: 8px; border-left: 3px solid var(--accent); transition: all 0.3s ease; }
+  .skill-category h3:hover { background: oklch(0.82 0.08 50); transform: translateX(3px); }
   .skill-item { margin-bottom: 1rem; }
   .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
   .skill-name { font-family: 'Noto Serif SC', serif; font-size: 0.95rem; font-weight: 500; }
@@ -855,10 +856,21 @@
     box-shadow: 0 4px 16px oklch(0.50 0.16 25 / 0.12);
   }
   .skill-capsule:active {
-    background: oklch(0.82 0.08 50);
-    border-color: oklch(0.45 0.14 25);
+    background: oklch(0.72 0.12 40);
+    border-color: oklch(0.40 0.15 25);
     transform: translateX(2px) scale(0.97);
-    box-shadow: 0 2px 8px oklch(0.50 0.16 25 / 0.15);
+    box-shadow: 0 2px 8px oklch(0.50 0.16 25 / 0.25);
+    color: oklch(0.98 0.003 90);
+  }
+  .skill-capsule:active .skill-capsule-name {
+    color: oklch(0.98 0.003 90);
+  }
+  .skill-capsule:active .skill-capsule-pct {
+    color: oklch(0.90 0.01 60);
+  }
+  .skill-capsule:active .skill-dot.filled {
+    background: oklch(0.98 0.003 90);
+    border-color: oklch(0.90 0.01 60);
   }
   .skill-capsule-name {
     font-family: 'Noto Serif SC', serif;
@@ -1302,10 +1314,55 @@
 
 /* ─── SECTION SEPARATOR ─── */
 section + section {
-  border-top: 1px solid oklch(0.93 0.005 80);
+  border-top: none;
+  margin-top: -1px;
+  position: relative;
+}
+section + section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, oklch(0.90 0.008 70) 30%, oklch(0.90 0.008 70) 70%, transparent 100%);
+  opacity: 0.6;
 }
 .contact-section {
   border-top: none !important;
+}
+.contact-section::before {
+  display: none !important;
+}
+
+/* ─── SMOOTH SECTION TRANSITIONS ─── */
+section, header[id] {
+  scroll-margin-top: 80px;
+}
+header[id] {
+  scroll-margin-top: 0;
+}
+/* Subtle gradient fade between sections for smoother visual flow */
+section {
+  position: relative;
+}
+section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, transparent 0%, oklch(0.97 0.005 80 / 0.5) 100%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+/* Don't apply to dark/full-bleed sections */
+.philosophy::after,
+#projects::after {
+  display: none;
 }
 </style>
 </head>
@@ -2041,6 +2098,15 @@ navItems.forEach(a => {
 
 // Scroll: find which section occupies the most viewport space
 function updateActiveNav() {
+  const scrollBottom = window.scrollY + window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+  // If near bottom of page, activate Contact
+  if (docHeight - scrollBottom < 150) {
+    navItems.forEach(a => a.classList.remove('active'));
+    const contactLink = document.querySelector('.nav-links a[href="#contact"]');
+    if (contactLink) contactLink.classList.add('active');
+    return;
+  }
   let bestId = null;
   let bestArea = 0;
   const vh = window.innerHeight;
