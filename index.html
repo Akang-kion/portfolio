@@ -80,14 +80,14 @@
     background:
       linear-gradient(90deg,
         var(--paper) 0%,
-        oklch(0.97 0.005 80 / 0.88) 4%,
-        oklch(0.97 0.005 80 / 0.72) 9%,
-        oklch(0.97 0.005 80 / 0.55) 15%,
-        oklch(0.97 0.005 80 / 0.38) 22%,
-        oklch(0.97 0.005 80 / 0.22) 30%,
-        oklch(0.97 0.005 80 / 0.12) 38%,
-        oklch(0.97 0.005 80 / 0.04) 48%,
-        transparent 60%
+        oklch(0.97 0.005 80 / 0.88) 3%,
+        oklch(0.97 0.005 80 / 0.72) 7%,
+        oklch(0.97 0.005 80 / 0.55) 11%,
+        oklch(0.97 0.005 80 / 0.38) 16%,
+        oklch(0.97 0.005 80 / 0.22) 22%,
+        oklch(0.97 0.005 80 / 0.12) 28%,
+        oklch(0.97 0.005 80 / 0.04) 36%,
+        transparent 45%
       ),
       linear-gradient(180deg,
         oklch(0.97 0.005 80 / 0.35) 0%,
@@ -229,7 +229,7 @@
 
   /* ─── SECTIONS ─── */
   section {
-    padding: clamp(5rem, 12vw, 12rem) clamp(2rem, 8vw, 10rem);
+    padding: clamp(6rem, 14vw, 14rem) clamp(2rem, 8vw, 10rem);
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -296,9 +296,33 @@
   .philosophy {
     background: var(--ink);
     color: var(--warm-white);
-    padding: clamp(5rem, 12vw, 12rem) clamp(2rem, 8vw, 10rem);
+    padding: clamp(6rem, 14vw, 14rem) clamp(2rem, 8vw, 10rem);
     max-width: none;
     position: relative;
+  }
+  /* Smooth gradient transition into philosophy section */
+  .philosophy::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--ink) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Smooth gradient transition out of philosophy section */
+  .philosophy::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, var(--ink) 0%, var(--paper) 100%);
+    pointer-events: none;
+    z-index: 2;
   }
 
   .philosophy .reveal {
@@ -1315,24 +1339,51 @@
 /* ─── SECTION SEPARATOR ─── */
 section + section {
   border-top: none;
-  margin-top: -1px;
+  margin-top: 0;
   position: relative;
 }
+/* Smooth gradient fade at section top */
 section + section::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, oklch(0.90 0.008 70) 30%, oklch(0.90 0.008 70) 70%, transparent 100%);
-  opacity: 0.6;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg,
+    oklch(0.97 0.005 80 / 0) 0%,
+    oklch(0.97 0.005 80 / 0) 40%,
+    oklch(0.97 0.005 80 / 0.01) 70%,
+    oklch(0.97 0.005 80 / 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
 }
 .contact-section {
   border-top: none !important;
 }
 .contact-section::before {
   display: none !important;
+}
+/* Decorative dot divider between sections */
+section + section::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.2;
+  z-index: 2;
+}
+.philosophy + section::after,
+#projects + section::after,
+.contact-section::after {
+  display: none;
 }
 
 /* ─── SMOOTH SECTION TRANSITIONS ─── */
@@ -1342,27 +1393,8 @@ section, header[id] {
 header[id] {
   scroll-margin-top: 0;
 }
-/* Subtle gradient fade between sections for smoother visual flow */
 section {
   position: relative;
-}
-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(180deg, transparent 0%, oklch(0.97 0.005 80 / 0.5) 100%);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-/* Don't apply to dark/full-bleed sections */
-.philosophy::after,
-#projects::after {
-  display: none;
 }
 </style>
 </head>
