@@ -246,22 +246,22 @@
   }
 
   .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 0.6rem;
-    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
     font-family: 'DM Sans', sans-serif;
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.8rem;
   }
 
   .section-label::before {
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--accent);
     flex-shrink: 0;
@@ -269,8 +269,8 @@
 
   .section-label::after {
     content: '';
-    width: 32px;
-    height: 1px;
+    width: 40px;
+    height: 1.5px;
     background: linear-gradient(90deg, var(--accent), transparent);
     flex-shrink: 0;
   }
@@ -517,9 +517,9 @@
 .video-strip::-webkit-scrollbar { display: none; }
 
 .video-card {
-    flex: 0 0 auto;
-    width: clamp(260px, 30vw, 380px);
+    width: 100%;
     aspect-ratio: 9/16;
+    flex: none;
     background: var(--ink);
     scroll-snap-align: start;
     position: relative;
@@ -604,17 +604,27 @@
     pointer-events: auto;
 }
 
-.video-card-title {
-    position: absolute;
-    bottom: 1.2rem;
-    left: 1.2rem;
-    right: 1.2rem;
+/* Playing state on wrap level */
+.video-card-wrap.playing .video-card::after { opacity: 0; }
+.video-card-wrap.playing .video-play-btn { opacity: 0; pointer-events: none; }
+.video-card-wrap.playing:hover .video-play-btn { opacity: 1; pointer-events: auto; }
+.video-card-wrap.playing .video-progress-wrap { opacity: 1; pointer-events: auto; }
+
+.video-card-wrap {
+    flex: 0 0 auto;
+    width: clamp(260px, 30vw, 380px);
+    scroll-snap-align: start;
+  }
+
+  .video-card-title {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 400;
-    font-size: 0.95rem;
-    color: var(--warm-white);
-    z-index: 2;
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--ink);
     letter-spacing: 0.02em;
+    text-align: center;
+    margin-top: 0.8rem;
+    padding: 0 0.2rem;
 }
 
 .video-hint {
@@ -676,7 +686,8 @@
 }
 
 @media (max-width: 768px) {
-    .video-card { width: 75vw; }
+    .video-card-wrap { width: 75vw; }
+    .video-card { width: 100%; }
     .video-card video { object-fit: cover; }
     .video-play-btn { width: 48px; height: 48px; }
     .video-play-btn::after { border-width: 8px 0 8px 14px; }
@@ -1161,7 +1172,7 @@
       <div class="work-date">2025.03 — 至今</div>
       <div class="work-company">广东柏盛包装有限公司</div>
       <div class="work-role">摄影 / 编导</div>
-      <div class="work-desc"><strong>负责公司宣传片、广告片、产品视频推广与国内外短视频的全流程制作</strong>，深度参与项目全周期，成功推动项目落地。与客户高效沟通，保障内容质量与交付进度。主导多个品牌合作项目，包括山姆/沃尔玛等知名品牌。</div>
+      <div class="work-desc"><strong>负责公司宣传片、广告片、产品视频推广与国内外短视频的全流程制作</strong>，深度参与项目全周期，成功推动项目落地。与客户高效沟通，保障内容质量与交付进度。主导多个品牌合作项目，包括山姆、沃尔玛等。</div>
       <div class="work-tags"><span class="work-tag">全流程制作</span><span class="work-tag">品牌合作</span></div>
     </div>
     <div class="work-item">
@@ -1299,51 +1310,61 @@
         <h2 class="section-title">视频作品</h2>
     </div>
     <div class="video-strip reveal">
+      <div class="video-card-wrap">
         <div class="video-card" data-video="./VIDEO1.mp4">
-            <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata" poster="./VIDEO1.jpg"></video>
-            <div class="video-play-btn"></div>
-            <div class="video-progress-wrap">
-                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-            </div>
-            <p class="video-card-title">作品一</p>
+          <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata" poster="./VIDEO1.jpg"></video>
+          <div class="video-play-btn"></div>
+          <div class="video-progress-wrap">
+            <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+            <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+          </div>
         </div>
+        <p class="video-card-title">作品一</p>
+      </div>
+      <div class="video-card-wrap">
         <div class="video-card" data-video="./VIDEO2.mp4">
-            <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata" poster="./VIDEO2.jpg"></video>
-            <div class="video-play-btn"></div>
-            <div class="video-progress-wrap">
-                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-            </div>
-            <p class="video-card-title">作品二</p>
+          <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata" poster="./VIDEO2.jpg"></video>
+          <div class="video-play-btn"></div>
+          <div class="video-progress-wrap">
+            <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+            <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+          </div>
         </div>
+        <p class="video-card-title">作品二</p>
+      </div>
+      <div class="video-card-wrap">
         <div class="video-card" data-video="./VIDEO3.mp4">
-            <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata" poster="./VIDEO3.jpg"></video>
-            <div class="video-play-btn"></div>
-            <div class="video-progress-wrap">
-                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-            </div>
-            <p class="video-card-title">作品三</p>
+          <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata" poster="./VIDEO3.jpg"></video>
+          <div class="video-play-btn"></div>
+          <div class="video-progress-wrap">
+            <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+            <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+          </div>
         </div>
+        <p class="video-card-title">作品三</p>
+      </div>
+      <div class="video-card-wrap">
         <div class="video-card" data-video="./VIDEO4.mp4">
-            <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata" poster="./VIDEO4.jpg"></video>
-            <div class="video-play-btn"></div>
-            <div class="video-progress-wrap">
-                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-            </div>
-            <p class="video-card-title">作品四</p>
+          <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata" poster="./VIDEO4.jpg"></video>
+          <div class="video-play-btn"></div>
+          <div class="video-progress-wrap">
+            <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+            <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+          </div>
         </div>
+        <p class="video-card-title">作品四</p>
+      </div>
+      <div class="video-card-wrap">
         <div class="video-card" data-video="./VIDEO5.mp4">
-            <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata" poster="./VIDEO5.jpg"></video>
-            <div class="video-play-btn"></div>
-            <div class="video-progress-wrap">
-                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-            </div>
-            <p class="video-card-title">作品五</p>
+          <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata" poster="./VIDEO5.jpg"></video>
+          <div class="video-play-btn"></div>
+          <div class="video-progress-wrap">
+            <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+            <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+          </div>
         </div>
+        <p class="video-card-title">作品五</p>
+      </div>
     </div>
     <div class="strip-nav reveal">
       <button class="strip-arrow arrow-left" aria-label="上一个" data-target="video"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -1522,9 +1543,11 @@
     return m + ':' + (sec < 10 ? '0' : '') + sec;
   }
 
-  const videoCards = document.querySelectorAll('.video-card');
+  const videoWraps = document.querySelectorAll('.video-card-wrap');
 
-  videoCards.forEach(card => {
+  videoWraps.forEach(wrap => {
+    const card = wrap.querySelector('.video-card');
+    if (!card) return;
     const video = card.querySelector('video');
     const progressFill = card.querySelector('.video-progress-fill');
     const progressBar = card.querySelector('.video-progress-bar');
@@ -1555,28 +1578,28 @@
       });
     }
 
-    card.addEventListener('click', (e) => {
+    wrap.addEventListener('click', (e) => {
       if (e.target.closest('.video-progress-bar')) return;
       if (video.paused) {
         document.querySelectorAll('.video-card video').forEach(v => {
           if (v !== video) {
             v.pause();
             v.muted = true;
-            v.closest('.video-card').classList.remove('playing');
+            v.closest('.video-card-wrap').classList.remove('playing');
           }
         });
         video.muted = false;
         video.play().catch(() => {});
-        card.classList.add('playing');
+        wrap.classList.add('playing');
       } else {
         video.pause();
         video.muted = true;
-        card.classList.remove('playing');
+        wrap.classList.remove('playing');
       }
     });
 
     video.addEventListener('ended', () => {
-      card.classList.remove('playing');
+      wrap.classList.remove('playing');
       video.muted = true;
       video.currentTime = 0;
       if (progressFill) progressFill.style.width = '0';
