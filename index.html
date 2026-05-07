@@ -1042,27 +1042,51 @@
   background: var(--ink);
   transition: all 0.3s;
 }
+/* Nav bilingual labels */
+.nav-zh { display: inline; }
+.nav-en { display: none; font-size: 0.65rem; letter-spacing: 0.06em; opacity: 0.5; margin-left: 0.4rem; font-weight: 400; }
+
+/* Nav overlay */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: oklch(0.15 0.01 30 / 0.3);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.nav-overlay.active {
+  display: block;
+}
+
 @media (max-width: 768px) {
   .nav-links {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 70vw;
-    max-width: 300px;
+    width: 33vw;
+    min-width: 140px;
+    max-width: 200px;
     height: 100vh;
     background: var(--paper);
     flex-direction: column;
-    padding: 5rem 2rem 2rem;
-    gap: 1.5rem;
+    padding: 5rem 1.2rem 2rem;
+    gap: 1.2rem;
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: -10px 0 40px oklch(0.15 0.01 30 / 0.1);
+    z-index: 101;
   }
   .nav-links.open {
     right: 0;
   }
   .nav-links a {
-    font-size: 1rem;
+    font-size: 0.88rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
+  .nav-en { display: block; font-size: 0.55rem; opacity: 0.4; margin-left: 0; }
   .nav-toggle {
     display: flex;
   }
@@ -1158,18 +1182,19 @@ section + section {
   <div class="nav-inner">
     <a href="#" class="nav-logo">马诒康</a>
     <div class="nav-links">
-      <a href="#about">关于</a>
-      <a href="#expertise">专业</a>
-      <a href="#experience">经历</a>
-      <a href="#projects">项目</a>
-      <a href="#gallery-sec">作品</a>
-      <a href="#contact">联系</a>
+      <a href="#about"><span class="nav-zh">关于</span><span class="nav-en">About</span></a>
+      <a href="#expertise"><span class="nav-zh">专业</span><span class="nav-en">Expertise</span></a>
+      <a href="#experience"><span class="nav-zh">经历</span><span class="nav-en">Experience</span></a>
+      <a href="#projects"><span class="nav-zh">项目</span><span class="nav-en">Projects</span></a>
+      <a href="#gallery-sec"><span class="nav-zh">作品</span><span class="nav-en">Gallery</span></a>
+      <a href="#contact"><span class="nav-zh">联系</span><span class="nav-en">Contact</span></a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <header class="hero">
@@ -1836,12 +1861,23 @@ window.addEventListener('scroll', () => {
   mainNav.classList.toggle('scrolled', window.scrollY > 80);
 });
 
+const navOverlay = document.getElementById('navOverlay');
+
 navToggle.addEventListener('click', () => {
   navLinks.classList.toggle('open');
+  navOverlay.classList.toggle('active');
+});
+
+navOverlay.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  navOverlay.classList.remove('active');
 });
 
 navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => navLinks.classList.remove('open'));
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navOverlay.classList.remove('active');
+  });
 });
 
 // Active nav link on scroll
