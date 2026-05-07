@@ -3,6 +3,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>马诒康 — 摄影师</title>
+<meta name="description" content="马诒康（Ma Yikang）—— 摄影师，专注人像、纪实与商业摄影。用镜头记录世界，以光影讲述故事。">
+<meta name="theme-color" content="#1a1a1a">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -645,20 +647,10 @@
 
     .gallery-card { width: 75vw; }
   }
-</style>
 </head>
-<script>
-document.querySelectorAll('.video-card video').forEach(video => {
-    video.addEventListener('mouseenter', () => video.play());
-    video.addEventListener('mouseleave', () => {
-        video.pause();
-        video.currentTime = 0; // 回到起始帧
-    });
-});
-</script>
 
-  
 <body>
+
 
 <!-- HERO -->
 <header class="hero">
@@ -789,55 +781,21 @@ document.querySelectorAll('.video-card video').forEach(video => {
     </div>
     <div class="video-strip reveal">
         <div class="video-card">
-            <video src="VIDEO1.mp4" muted loop playsinline preload="metadata"></video>
-            <p class="video-card-title">作品一</p>
-        </div>
-        <div class="video-card">
-          <video
-        poster="VIDEO1.jpg"
-        muted
-        loop
-        playsinline
-        preload="metadata">
-            <video src="VIDEO2.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO2.mp4" poster="VIDEO1.jpg" muted loop playsinline preload="metadata"></video>
             <p class="video-card-title">作品二</p>
         </div>
         <div class="video-card">
-            <video
-        poster="VIDEO2.jpg"
-        muted
-        loop
-        playsinline
-        preload="metadata">
-            <video src="VIDEO3.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO3.mp4" poster="VIDEO2.jpg" muted loop playsinline preload="metadata"></video>
             <p class="video-card-title">作品三</p>
         </div>
         <div class="video-card">
-            <video
-        poster="VIDEO3.jpg"
-        muted
-        loop
-        playsinline
-        preload="metadata">
-            <video src="VIDEO4.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO4.mp4" poster="VIDEO3.jpg" muted loop playsinline preload="metadata"></video>
             <p class="video-card-title">作品四</p>
         </div>
         <div class="video-card">
-            <video
-        poster="VIDEO4.jpg"
-        muted
-        loop
-        playsinline
-        preload="metadata">
-            <video src="VIDEO5.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO5.mp4" poster="VIDEO4.jpg" muted loop playsinline preload="metadata"></video>
             <p class="video-card-title">作品五</p>
         </div>
-        <video
-      poster="VIDEO5.jpg"
-        muted
-        loop
-        playsinline
-        preload="metadata" >
     </div>
     <p class="video-hint">← 左右滑动浏览更多 →</p>
 </section>
@@ -924,6 +882,13 @@ document.querySelectorAll('.video-card video').forEach(video => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 </script>
-
+    // Video hover play/pause
+  document.querySelectorAll('.video-card video').forEach(video => {
+    video.addEventListener('mouseenter', () => video.play());
+    video.addEventListener('mouseleave', () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  });
 </body>
 </html>
