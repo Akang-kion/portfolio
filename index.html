@@ -195,7 +195,7 @@
   }
 
   .hero-contact-item .label {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent);
@@ -228,7 +228,7 @@
   }
 
   .section-label {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
@@ -554,14 +554,14 @@
 }
 
 .video-card.playing:hover .video-play-btn {
-    opacity: 1;
-    pointer-events: auto;
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* Playing state on wrap level */
 .video-card-wrap.playing .video-card::after { opacity: 0; }
 .video-card-wrap.playing .video-play-btn { opacity: 0; pointer-events: none; }
-.video-card-wrap.playing:hover .video-play-btn { opacity: 1; pointer-events: auto; }
+.video-card-wrap.playing:hover .video-play-btn { opacity: 0; pointer-events: none; }
 .video-card-wrap.playing .video-progress-wrap { opacity: 1; pointer-events: auto; }
 
 .video-card-wrap {
@@ -632,7 +632,7 @@
 .video-time {
     display: flex;
     justify-content: space-between;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: rgba(255,255,255,0.7);
     margin-top: 0.3rem;
     font-variant-numeric: tabular-nums;
@@ -739,7 +739,7 @@
   }
 
   .contact-block-label {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent);
@@ -748,7 +748,7 @@
 
   .contact-block-value {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
     color: var(--ink);
   }
 
@@ -835,9 +835,9 @@
   .project-card:hover { border-color: oklch(0.80 0.01 70); transform: translateY(-4px); box-shadow: 0 12px 40px oklch(0.15 0.01 30 / 0.08); }
   .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
   .project-card:hover::before { opacity: 1; }
-  .project-type { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.8rem; }
+  .project-type { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.8rem; }
   .project-title { font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; line-height: 1.45; letter-spacing: 0.01em; }
-  .project-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; font-family: 'DM Sans', 'Noto Serif SC', sans-serif; }
+  .project-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.65; font-family: 'DM Sans', 'Noto Serif SC', sans-serif; }
   
 
   /* ─── LIGHTBOX ─── */
@@ -852,7 +852,7 @@
   .lightbox-nav.prev { left: 1.5rem; }
   .lightbox-nav.next { right: 1.5rem; }
   .lightbox-nav svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .lightbox-counter { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); font-size: 0.82rem; color: rgba(255,255,255,0.6); font-variant-numeric: tabular-nums; }
+  .lightbox-counter { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); font-size: 0.95rem; color: rgba(255,255,255,0.6); font-variant-numeric: tabular-nums; }
 
 
 
@@ -1126,10 +1126,17 @@
   padding: 0.6rem 1.2rem;
   border: 1px solid var(--divider);
   border-radius: 100px;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--ink);
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.contact-socials {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
 }
 .social-link:hover {
   background: var(--ink);
