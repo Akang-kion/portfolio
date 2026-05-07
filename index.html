@@ -361,6 +361,9 @@
 
   .gallery-strip::-webkit-scrollbar { display: none; }
 
+  .gallery-strip.dragging { cursor: grabbing; user-select: none; }
+  .gallery-strip:not(.dragging) { cursor: grab; }
+
   .gallery-card {
     flex: 0 0 auto;
     width: clamp(260px, 30vw, 380px);
@@ -416,6 +419,47 @@
 }
 
 .video-strip::-webkit-scrollbar { display: none; }
+
+.video-strip.dragging { cursor: grabbing; user-select: none; }
+.video-strip:not(.dragging) { cursor: grab; }
+
+/* ─── NAV ARROWS (desktop) ─── */
+.nav-arrows {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding: 0 clamp(2rem, 8vw, 10rem);
+}
+
+.nav-arrow {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--divider);
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+
+.nav-arrow:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+}
+
+.nav-arrow:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .nav-arrows { display: none; }
+}
 
 .video-card {
     flex: 0 0 auto;
@@ -895,6 +939,10 @@
     </div>
   </div>
 
+  <div class="nav-arrows reveal">
+    <button class="nav-arrow" data-target="gallery" data-dir="-1" aria-label="上一张">←</button>
+    <button class="nav-arrow" data-target="gallery" data-dir="1" aria-label="下一张">→</button>
+  </div>
   <p class="gallery-hint reveal">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="gallery"></span></span></p>
 </section>
 <!-- VIDEO -->
@@ -939,6 +987,10 @@
             <button class="video-mute-btn" aria-label="切换声音"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <p class="video-card-title">作品五</p>
         </div>
+    </div>
+    <div class="nav-arrows">
+        <button class="nav-arrow" data-target="video" data-dir="-1" aria-label="上一个">←</button>
+        <button class="nav-arrow" data-target="video" data-dir="1" aria-label="下一个">→</button>
     </div>
     <p class="video-hint">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="video"></span></span></p>
 </section>
@@ -1051,6 +1103,57 @@
   const videoStrip = document.querySelector('.video-strip');
   const videoThumb = document.querySelector('.scroll-bar-thumb[data-for="video"]');
   initScrollBar(videoStrip, videoThumb);
+
+  // ── Drag to Scroll (desktop) ──
+  function initDragScroll(stripEl) {
+    if (!stripEl) return;
+    let isDown = false, startX, scrollLeft;
+
+    stripEl.addEventListener('mousedown', (e) => {
+      // Don't intercept clicks on buttons/links/videos
+      if (e.target.closest('button, a, video')) return;
+      isDown = true;
+      stripEl.classList.add('dragging');
+      startX = e.pageX - stripEl.offsetLeft;
+      scrollLeft = stripEl.scrollLeft;
+    });
+
+    stripEl.addEventListener('mouseleave', () => {
+      isDown = false;
+      stripEl.classList.remove('dragging');
+    });
+
+    stripEl.addEventListener('mouseup', () => {
+      isDown = false;
+      stripEl.classList.remove('dragging');
+    });
+
+    stripEl.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - stripEl.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      stripEl.scrollLeft = scrollLeft - walk;
+    });
+  }
+
+  initDragScroll(galleryStrip);
+  initDragScroll(videoStrip);
+
+  // ── Arrow Navigation ──
+  document.querySelectorAll('.nav-arrow').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      const dir = parseInt(btn.dataset.dir);
+      const strip = target === 'gallery' ? galleryStrip : videoStrip;
+      if (!strip) return;
+      const card = strip.querySelector('.gallery-card, .video-card');
+      if (!card) return;
+      const gap = parseFloat(getComputedStyle(strip).gap) || 24;
+      const step = card.offsetWidth + gap;
+      strip.scrollBy({ left: dir * step, behavior: 'smooth' });
+    });
+  });
 
   // ── Video Controls ──
   document.querySelectorAll('.video-card').forEach(card => {
