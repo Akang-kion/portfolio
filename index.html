@@ -800,7 +800,7 @@
   /* ─── RESPONSIVE ─── */
   /* ─── SKILLS ─── */
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-  .skill-category h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--muted); }
+  .skill-category h3 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 1.5rem; color: var(--ink); display: inline-block; padding: 0.3rem 0.9rem; background: var(--accent-soft); border-radius: 4px; border-left: 3px solid var(--accent); }
   .skill-item { margin-bottom: 1.2rem; }
   .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
   .skill-name { font-family: 'Noto Serif SC', serif; font-size: 0.95rem; font-weight: 500; }
@@ -1086,7 +1086,21 @@
 }
 
 /* ─── HERO SCROLL ARROW ─── */
-.hero-scroll-arrow {
+.hero-edu {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero-edu::before {
+    content: '🎓';
+    margin-right: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .hero-scroll-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1202,6 +1216,7 @@ section + section {
     <div class="hero-line"></div>
     <p class="hero-subtitle">Ma Yikang</p>
     <p class="hero-tagline">用镜头记录世界，以光影讲述故事</p>
+    <p class="hero-edu">安徽工程大学 · 视觉传达设计 · 本科 2014—2020</p>
 
     <a href="#about" class="hero-scroll-arrow" aria-label="向下滚动">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
@@ -1598,23 +1613,6 @@ section + section {
 
 
 
-<!-- EDUCATION -->
-<section id="education">
-  <div class="reveal">
-    <p class="section-label">Education</p>
-    <h2 class="section-title">教育背景</h2>
-  </div>
-  <div class="edu-card reveal">
-    <div class="edu-year">2020</div>
-    <div>
-      <div class="edu-school">安徽工程大学</div>
-      <div class="edu-major">视觉传达设计</div>
-      <div class="edu-degree">本科 · 2014 — 2020</div>
-    </div>
-  </div>
-</section>
-
-<!-- JOURNEY -->
 <!-- CONTACT -->
 <section id="contact" class="contact-section">
   <div class="reveal">
