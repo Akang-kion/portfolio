@@ -389,6 +389,9 @@
     font-size: 0.8rem;
     color: var(--muted);
     letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
 /* ─── VIDEO ─── */
@@ -527,7 +530,6 @@
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -536,9 +538,7 @@
     transition: opacity 0.3s ease, background 0.2s ease;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    line-height: 1;
     padding: 0;
-    color: var(--warm-white);
 }
 
 .video-card:hover .video-mute-btn {
@@ -549,101 +549,42 @@
     background: rgba(0,0,0,0.7);
 }
 
+.video-mute-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    stroke: none;
+}
+
 .video-hint {
     padding: 1.5rem clamp(2rem, 8vw, 10rem) 0;
     font-size: 0.8rem;
     color: var(--muted);
     letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.scroll-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--divider);
+    border-radius: 2px;
+    overflow: hidden;
+    max-width: 200px;
+}
+
+.scroll-bar-thumb {
+    height: 100%;
+    width: 30%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.1s ease;
 }
 
 @media (max-width: 768px) {
     .video-card { width: 75vw; }
-}
-
-/* ─── BTS (Behind the Scenes) ─── */
-.bts-section {
-    max-width: none;
-    padding: clamp(4rem, 10vw, 10rem) 0;
-}
-
-.bts-section .section-label,
-.bts-section .section-title {
-    padding: 0 clamp(2rem, 8vw, 10rem);
-}
-
-.bts-strip {
-    display: flex;
-    gap: 1.5rem;
-    padding: 0 clamp(2rem, 8vw, 10rem);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-}
-
-.bts-strip::-webkit-scrollbar { display: none; }
-
-.bts-card {
-    flex: 0 0 auto;
-    width: clamp(280px, 32vw, 420px);
-    aspect-ratio: 4/5;
-    background: var(--divider);
-    scroll-snap-align: start;
-    position: relative;
-    overflow: hidden;
-    border-radius: 6px;
-}
-
-.bts-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-    filter: grayscale(30%) contrast(1.05);
-}
-
-.bts-card:hover img {
-    transform: scale(1.06);
-    filter: grayscale(0%) contrast(1);
-}
-
-.bts-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 2.5rem 1.5rem 1.5rem;
-    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.65) 100%);
-    z-index: 2;
-}
-
-.bts-caption {
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 400;
-    font-size: 1.05rem;
-    color: var(--warm-white);
-    letter-spacing: 0.02em;
-    margin-bottom: 0.3rem;
-}
-
-.bts-tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent-soft);
-    font-weight: 500;
-}
-
-.bts-hint {
-    padding: 1.5rem clamp(2rem, 8vw, 10rem) 0;
-    font-size: 0.8rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-}
-
-@media (max-width: 768px) {
-    .bts-card { width: 80vw; }
 }
 
   /* ─── TIMELINE ─── */
@@ -954,7 +895,7 @@
     </div>
   </div>
 
-  <p class="gallery-hint reveal">← 左右滑动浏览更多 →</p>
+  <p class="gallery-hint reveal">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="gallery"></span></span></p>
 </section>
 <!-- VIDEO -->
 <section class="video-section">
@@ -967,85 +908,39 @@
             <video src="VIDEO1.mp4" poster="VIDEO1.jpg" muted loop playsinline preload="none"></video>
             <button class="video-play-btn" aria-label="播放">▶</button>
             <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
+            <button class="video-mute-btn" aria-label="切换声音"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <p class="video-card-title">作品一</p>
         </div>
         <div class="video-card">
             <video src="VIDEO2.mp4" poster="VIDEO2.jpg" muted loop playsinline preload="none"></video>
             <button class="video-play-btn" aria-label="播放">▶</button>
             <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
+            <button class="video-mute-btn" aria-label="切换声音"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <p class="video-card-title">作品二</p>
         </div>
         <div class="video-card">
             <video src="VIDEO3.mp4" poster="VIDEO3.jpg" muted loop playsinline preload="none"></video>
             <button class="video-play-btn" aria-label="播放">▶</button>
             <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
+            <button class="video-mute-btn" aria-label="切换声音"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <p class="video-card-title">作品三</p>
         </div>
         <div class="video-card">
             <video src="VIDEO4.mp4" poster="VIDEO4.jpg" muted loop playsinline preload="none"></video>
             <button class="video-play-btn" aria-label="播放">▶</button>
             <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
+            <button class="video-mute-btn" aria-label="切换声音"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <p class="video-card-title">作品四</p>
         </div>
         <div class="video-card">
             <video src="VIDEO5.mp4" poster="VIDEO5.jpg" muted loop playsinline preload="none"></video>
             <button class="video-play-btn" aria-label="播放">▶</button>
             <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
+            <button class="video-mute-btn" aria-label="切换声音"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
             <p class="video-card-title">作品五</p>
         </div>
     </div>
-    <p class="video-hint">← 左右滑动浏览更多 →</p>
-</section>
-
-<!-- BTS -->
-<section class="bts-section">
-    <div class="reveal">
-        <p class="section-label">Behind the Scenes</p>
-        <h2 class="section-title">幕后花絮</h2>
-    </div>
-    <div class="bts-strip reveal">
-        <div class="bts-card">
-            <img src="VIDEO1.jpg" alt="幕后一" loading="lazy">
-            <div class="bts-overlay">
-                <p class="bts-caption">光影之间</p>
-                <span class="bts-tag">人像拍摄</span>
-            </div>
-        </div>
-        <div class="bts-card">
-            <img src="VIDEO2.jpg" alt="幕后二" loading="lazy">
-            <div class="bts-overlay">
-                <p class="bts-caption">捕捉瞬间</p>
-                <span class="bts-tag">街拍纪实</span>
-            </div>
-        </div>
-        <div class="bts-card">
-            <img src="VIDEO3.jpg" alt="幕后三" loading="lazy">
-            <div class="bts-overlay">
-                <p class="bts-caption">自然之美</p>
-                <span class="bts-tag">风光摄影</span>
-            </div>
-        </div>
-        <div class="bts-card">
-            <img src="VIDEO4.jpg" alt="幕后四" loading="lazy">
-            <div class="bts-overlay">
-                <p class="bts-caption">商业合作</p>
-                <span class="bts-tag">品牌拍摄</span>
-            </div>
-        </div>
-        <div class="bts-card">
-            <img src="VIDEO5.jpg" alt="幕后五" loading="lazy">
-            <div class="bts-overlay">
-                <p class="bts-caption">创意探索</p>
-                <span class="bts-tag">创意摄影</span>
-            </div>
-        </div>
-    </div>
-    <p class="bts-hint">← 左右滑动浏览更多 →</p>
+    <p class="video-hint">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="video"></span></span></p>
 </section>
 
 <!-- JOURNEY -->
@@ -1112,7 +1007,7 @@
 
 
 <script>
-  // Scroll reveal
+  // ── Scroll Reveal ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1128,6 +1023,34 @@
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // ── SVG Icons ──
+  const ICON_SOUND_ON = '<svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 010 14.14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+  const ICON_SOUND_OFF = '<svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+
+  // ── Scrollbar Indicators ──
+  function initScrollBar(stripEl, thumbEl) {
+    if (!stripEl || !thumbEl) return;
+    const update = () => {
+      const maxScroll = stripEl.scrollWidth - stripEl.clientWidth;
+      if (maxScroll <= 0) { thumbEl.style.width = '100%'; return; }
+      const ratio = stripEl.clientWidth / stripEl.scrollWidth;
+      const pos = stripEl.scrollLeft / maxScroll;
+      thumbEl.style.width = Math.max(ratio * 100, 10) + '%';
+      thumbEl.style.marginLeft = (pos * (100 - ratio * 100)) + '%';
+    };
+    stripEl.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  const galleryStrip = document.querySelector('.gallery-strip');
+  const galleryThumb = document.querySelector('.scroll-bar-thumb[data-for="gallery"]');
+  initScrollBar(galleryStrip, galleryThumb);
+
+  const videoStrip = document.querySelector('.video-strip');
+  const videoThumb = document.querySelector('.scroll-bar-thumb[data-for="video"]');
+  initScrollBar(videoStrip, videoThumb);
 
   // ── Video Controls ──
   document.querySelectorAll('.video-card').forEach(card => {
@@ -1179,14 +1102,14 @@
       video.currentTime = ratio * video.duration;
     });
 
-    // Mute toggle
+    // Mute toggle with SVG swap
     muteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       video.muted = !video.muted;
-      muteBtn.textContent = video.muted ? '🔇' : '🔊';
+      muteBtn.innerHTML = video.muted ? ICON_SOUND_OFF : ICON_SOUND_ON;
     });
 
-    // Hover auto-play (only if already playing, don't auto-start)
+    // Hover: preload on first hover
     card.addEventListener('mouseenter', () => {
       if (video.preload === 'none') {
         video.preload = 'metadata';
