@@ -908,44 +908,37 @@
   }
 
   /* ─── CAROUSEL ARROWS ─── */
-  .strip-wrap {
-    position: relative;
+  .strip-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 0 clamp(2rem, 8vw, 10rem);
   }
 
   .strip-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: 1.5px solid oklch(0.75 0.01 70);
-    background: oklch(0.98 0.003 90 / 0.9);
-    backdrop-filter: blur(8px);
+    border: 1.5px solid oklch(0.78 0.01 70);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .strip-wrap:hover .strip-arrow {
-    opacity: 1;
-    pointer-events: auto;
   }
 
   .strip-arrow:hover {
     background: var(--ink);
     border-color: var(--ink);
-    transform: translateY(-50%) scale(1.05);
+    transform: scale(1.06);
   }
 
   .strip-arrow svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     stroke: var(--ink);
     fill: none;
     stroke-width: 1.8;
@@ -958,24 +951,10 @@
     stroke: var(--warm-white);
   }
 
-  .strip-arrow.arrow-left {
-    left: clamp(0.5rem, 2vw, 1.5rem);
-  }
-
-  .strip-arrow.arrow-right {
-    right: clamp(0.5rem, 2vw, 1.5rem);
-  }
-
   @media (max-width: 768px) {
-    .strip-arrow {
-      width: 36px;
-      height: 36px;
-      opacity: 0.8;
-      pointer-events: auto;
-    }
+    .strip-nav { gap: 1rem; margin-top: 1.5rem; }
+    .strip-arrow { width: 36px; height: 36px; }
     .strip-arrow svg { width: 14px; height: 14px; }
-    .strip-arrow.arrow-left { left: 0.3rem; }
-    .strip-arrow.arrow-right { right: 0.3rem; }
   }
 
 </style>
@@ -1239,29 +1218,27 @@
     <p class="section-label">作品集</p>
     <h2 class="section-title">精选作品</h2>
   </div>
-  <div class="strip-wrap reveal">
-    <div class="gallery-strip">
-      <div class="gallery-card" data-index="0" style="cursor:pointer;">
-        <img src="./image/160-600x800.jpg" alt="人像" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      </div>
-      <div class="gallery-card" data-index="1" style="cursor:pointer;">
-        <img src="./image/316-600x800.jpg" alt="风光" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      </div>
-      <div class="gallery-card" data-index="2" style="cursor:pointer;">
-        <img src="./image/435-600x800.jpg" alt="纪实" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      </div>
-      <div class="gallery-card" data-index="3" style="cursor:pointer;">
-        <img src="./image/1068-600x800.jpg" alt="街拍" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      </div>
-      <div class="gallery-card" data-index="4" style="cursor:pointer;">
-        <img src="./image/542-600x800.jpg" alt="光影" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      </div>
+  <div class="gallery-strip reveal">
+    <div class="gallery-card" data-index="0" style="cursor:pointer;">
+      <img src="./image/160-600x800.jpg" alt="人像" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
     </div>
+    <div class="gallery-card" data-index="1" style="cursor:pointer;">
+      <img src="./image/316-600x800.jpg" alt="风光" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+    </div>
+    <div class="gallery-card" data-index="2" style="cursor:pointer;">
+      <img src="./image/435-600x800.jpg" alt="纪实" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+    </div>
+    <div class="gallery-card" data-index="3" style="cursor:pointer;">
+      <img src="./image/1068-600x800.jpg" alt="街拍" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+    </div>
+    <div class="gallery-card" data-index="4" style="cursor:pointer;">
+      <img src="./image/542-600x800.jpg" alt="光影" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+    </div>
+  </div>
+  <div class="strip-nav reveal">
     <button class="strip-arrow arrow-left" aria-label="上一个" data-target="gallery"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
     <button class="strip-arrow arrow-right" aria-label="下一个" data-target="gallery"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
-
-  <p class="gallery-hint reveal">← 左右滑动浏览 · 点击放大查看 →</p>
 </section>
 <!-- VIDEO -->
 <section class="video-section">
@@ -1269,58 +1246,57 @@
         <p class="section-label">Video Works</p>
         <h2 class="section-title">视频作品</h2>
     </div>
-    <div class="strip-wrap reveal">
-      <div class="video-strip">
-          <div class="video-card" data-video="./VIDEO1.mp4">
-              <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata" poster="./VIDEO1.jpg"></video>
-              <div class="video-play-btn"></div>
-              <div class="video-progress-wrap">
-                  <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                  <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-              </div>
-              <p class="video-card-title">作品一</p>
-          </div>
-          <div class="video-card" data-video="./VIDEO2.mp4">
-              <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata" poster="./VIDEO2.jpg"></video>
-              <div class="video-play-btn"></div>
-              <div class="video-progress-wrap">
-                  <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                  <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-              </div>
-              <p class="video-card-title">作品二</p>
-          </div>
-          <div class="video-card" data-video="./VIDEO3.mp4">
-              <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata" poster="./VIDEO3.jpg"></video>
-              <div class="video-play-btn"></div>
-              <div class="video-progress-wrap">
-                  <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                  <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-              </div>
-              <p class="video-card-title">作品三</p>
-          </div>
-          <div class="video-card" data-video="./VIDEO4.mp4">
-              <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata" poster="./VIDEO4.jpg"></video>
-              <div class="video-play-btn"></div>
-              <div class="video-progress-wrap">
-                  <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                  <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-              </div>
-              <p class="video-card-title">作品四</p>
-          </div>
-          <div class="video-card" data-video="./VIDEO5.mp4">
-              <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata" poster="./VIDEO5.jpg"></video>
-              <div class="video-play-btn"></div>
-              <div class="video-progress-wrap">
-                  <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
-                  <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
-              </div>
-              <p class="video-card-title">作品五</p>
-          </div>
-      </div>
+    <div class="video-strip reveal">
+        <div class="video-card" data-video="./VIDEO1.mp4">
+            <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata" poster="./VIDEO1.jpg"></video>
+            <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
+            <p class="video-card-title">作品一</p>
+        </div>
+        <div class="video-card" data-video="./VIDEO2.mp4">
+            <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata" poster="./VIDEO2.jpg"></video>
+            <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
+            <p class="video-card-title">作品二</p>
+        </div>
+        <div class="video-card" data-video="./VIDEO3.mp4">
+            <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata" poster="./VIDEO3.jpg"></video>
+            <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
+            <p class="video-card-title">作品三</p>
+        </div>
+        <div class="video-card" data-video="./VIDEO4.mp4">
+            <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata" poster="./VIDEO4.jpg"></video>
+            <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
+            <p class="video-card-title">作品四</p>
+        </div>
+        <div class="video-card" data-video="./VIDEO5.mp4">
+            <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata" poster="./VIDEO5.jpg"></video>
+            <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
+            <p class="video-card-title">作品五</p>
+        </div>
+    </div>
+    <div class="strip-nav reveal">
       <button class="strip-arrow arrow-left" aria-label="上一个" data-target="video"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
       <button class="strip-arrow arrow-right" aria-label="下一个" data-target="video"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
-    <p class="video-hint">← 左右滑动浏览更多 →</p>
 </section>
 
 
@@ -1556,32 +1532,35 @@
   });
 
   // ── Carousel Arrow Navigation ──
-  document.querySelectorAll('.strip-arrow').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const wrap = btn.closest('.strip-wrap');
-      const strip = wrap.querySelector('.gallery-strip, .video-strip');
-      if (!strip) return;
-      const card = strip.querySelector('.gallery-card, .video-card');
-      if (!card) return;
-      const gap = parseFloat(getComputedStyle(strip).gap) || 24;
-      const scrollAmount = card.offsetWidth + gap;
-      const isLeft = btn.classList.contains('arrow-left');
-      const maxScroll = strip.scrollWidth - strip.clientWidth;
+  document.querySelectorAll('.strip-nav').forEach(nav => {
+    const arrows = nav.querySelectorAll('.strip-arrow');
+    const section = nav.closest('section') || nav.parentElement;
+    const strip = section.querySelector('.gallery-strip, .video-strip');
+    if (!strip) return;
 
-      if (isLeft) {
-        if (strip.scrollLeft <= 0) {
-          strip.scrollTo({ left: maxScroll, behavior: 'smooth' });
+    arrows.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = strip.querySelector('.gallery-card, .video-card');
+        if (!card) return;
+        const gap = parseFloat(getComputedStyle(strip).gap) || 24;
+        const scrollAmount = card.offsetWidth + gap;
+        const isLeft = btn.classList.contains('arrow-left');
+        const maxScroll = strip.scrollWidth - strip.clientWidth;
+
+        if (isLeft) {
+          if (strip.scrollLeft <= 0) {
+            strip.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            strip.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          }
         } else {
-          strip.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          if (strip.scrollLeft >= maxScroll - 5) {
+            strip.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            strip.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+          }
         }
-      } else {
-        if (strip.scrollLeft >= maxScroll - 5) {
-          strip.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          strip.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-      }
+      });
     });
   });
 </script>
