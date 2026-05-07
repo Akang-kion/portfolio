@@ -59,20 +59,27 @@
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    filter: grayscale(20%) contrast(1.05);
-    transition: filter 0.6s ease;
+    filter: grayscale(100%) contrast(1.05);
+    transition: filter 1.2s ease;
   }
 
   .hero-photo:hover img {
-    filter: grayscale(0%) contrast(1);
+    filter: grayscale(30%) contrast(1);
   }
 
   .hero-photo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, var(--paper) 0%, transparent 30%);
+    background: linear-gradient(90deg, var(--paper) 0%, oklch(0.97 0.005 80 / 0.85) 8%, oklch(0.97 0.005 80 / 0.6) 16%, oklch(0.97 0.005 80 / 0.3) 25%, transparent 40%);
     pointer-events: none;
+  }
+
+  /* Mobile: gradient from bottom */
+  @media (max-width: 768px) {
+    .hero-photo::after {
+      background: linear-gradient(180deg, transparent 30%, oklch(0.97 0.005 80 / 0.4) 60%, var(--paper) 100%);
+    }
   }
 
   .hero-label {
@@ -137,6 +144,7 @@
     font-size: clamp(0.95rem, 1.5vw, 1.2rem);
     color: var(--muted);
     margin-top: 0.4rem;
+    letter-spacing: 0.08em;
     opacity: 0;
     animation: fadeUp 0.6s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
@@ -222,6 +230,18 @@
     color: var(--accent);
     margin-bottom: 1rem;
     font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
   }
 
   .section-title {
@@ -231,6 +251,24 @@
     line-height: 1.2;
     margin-bottom: 2.5rem;
     letter-spacing: -0.01em;
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin-top: 0.8rem;
+    opacity: 0.6;
+  }
+
+  /* Centered title variant for philosophy */
+  .section-title--center::after {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* ─── ABOUT ─── */
@@ -240,6 +278,17 @@
     color: oklch(0.3 0.02 60);
   }
 
+  .about-text p:first-of-type::first-letter {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 3.2em;
+    float: left;
+    line-height: 0.85;
+    margin-right: 0.08em;
+    margin-top: 0.05em;
+    color: var(--accent);
+  }
+
   /* ─── PHILOSOPHY ─── */
   .philosophy {
     background: var(--ink);
@@ -247,6 +296,19 @@
     padding: clamp(5rem, 12vw, 12rem) clamp(2rem, 8vw, 10rem);
     max-width: none;
     position: relative;
+    text-align: center;
+  }
+
+  .philosophy .reveal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .philosophy-quote::before {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -2.5rem;
   }
 
   .philosophy .section-label { color: var(--accent-soft); }
@@ -255,9 +317,10 @@
     font-family: 'Noto Serif SC', serif;
     font-weight: 300;
     font-size: clamp(1.5rem, 3.5vw, 2.8rem);
-    line-height: 1.6;
+    line-height: 1.8;
     max-width: 800px;
     position: relative;
+    letter-spacing: 0.03em;
   }
 
   .philosophy-quote::before {
@@ -294,10 +357,15 @@
     grid-template-columns: 2.5rem 1fr auto;
     gap: 1.5rem;
     align-items: baseline;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, padding-left 0.3s ease;
+    border-left: 3px solid transparent;
   }
 
-  .expertise-item:hover { background: oklch(0.95 0.008 80); }
+  .expertise-item:hover {
+    background: oklch(0.95 0.008 80);
+    padding-left: 1rem;
+    border-left-color: var(--accent);
+  }
 
   .expertise-num {
     font-family: 'Playfair Display', serif;
@@ -410,6 +478,7 @@
     position: relative;
     overflow: hidden;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .video-card video {
@@ -425,6 +494,67 @@
     inset: 0;
     background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.5) 100%);
     pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.video-card.playing::after {
+    opacity: 0;
+}
+
+/* Play button overlay */
+.video-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    transition: background 0.3s, transform 0.3s;
+    pointer-events: none;
+}
+
+.video-play-btn::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent rgba(255,255,255,0.9);
+    margin-left: 3px;
+}
+
+.video-card:hover .video-play-btn {
+    background: rgba(255,255,255,0.35);
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.video-card.playing .video-play-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Pause icon when playing */
+.video-card.playing .video-play-btn::after {
+    border: none;
+    width: 14px;
+    height: 18px;
+    border-left: 3px solid rgba(255,255,255,0.9);
+    border-right: 3px solid rgba(255,255,255,0.9);
+    margin-left: 0;
+}
+
+.video-card.playing:hover .video-play-btn {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .video-card-title {
@@ -449,6 +579,9 @@
 
 @media (max-width: 768px) {
     .video-card { width: 75vw; }
+    .video-card video { object-fit: cover; }
+    .video-play-btn { width: 48px; height: 48px; }
+    .video-play-btn::after { border-width: 8px 0 8px 14px; }
 }
 
   /* ─── TIMELINE ─── */
@@ -470,6 +603,12 @@
   .timeline-item {
     position: relative;
     padding-bottom: 3rem;
+    padding-left: 1rem;
+    transition: padding-left 0.3s ease;
+  }
+
+  .timeline-item:hover {
+    padding-left: 1.5rem;
   }
 
   .timeline-item:last-child { padding-bottom: 0; }
@@ -483,6 +622,7 @@
     border-radius: 50%;
     background: var(--accent);
     transform: translateX(-4px);
+    box-shadow: 0 0 0 3px oklch(0.50 0.16 25 / 0.15);
   }
 
   .timeline-year {
@@ -509,6 +649,16 @@
   .contact-section {
     text-align: center;
     padding-bottom: 6rem;
+    position: relative;
+  }
+
+  .contact-section::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--divider));
+    margin: 0 auto 2rem;
   }
 
   .contact-grid {
@@ -628,8 +778,8 @@
 
   /* ─── PROJECTS ─── */
   .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .project-card { background: var(--warm-white); border: 1px solid var(--divider); border-radius: 4px; padding: 2rem; transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden; }
-  .project-card:hover { border-color: oklch(0.80 0.01 70); transform: translateY(-3px); }
+  .project-card { background: var(--warm-white); border: 1px solid var(--divider); border-radius: 6px; padding: 2rem; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+  .project-card:hover { border-color: oklch(0.80 0.01 70); transform: translateY(-4px); box-shadow: 0 12px 40px oklch(0.15 0.01 30 / 0.08); }
   .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
   .project-card:hover::before { opacity: 1; }
   .project-type { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.8rem; }
@@ -651,16 +801,11 @@
   .lightbox-nav svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .lightbox-counter { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); font-size: 0.82rem; color: rgba(255,255,255,0.6); font-variant-numeric: tabular-nums; }
 
-  /* ─── VIDEO LIGHTBOX ─── */
-  .video-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-  .video-lightbox.active { display: flex; opacity: 1; }
-  .video-lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 44px; height: 44px; border: none; border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; z-index: 10; }
-  .video-lightbox-close:hover { background: rgba(255,255,255,0.2); }
-  .video-lightbox video { max-width: 90vw; max-height: 90vh; border-radius: 8px; background: #000; }
-  .video-card { cursor: pointer; }
+
 
   /* ─── EDUCATION ─── */
-  .edu-card { background: var(--warm-white); border: 1px solid var(--divider); border-radius: 4px; padding: 2.5rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; max-width: 600px; }
+  .edu-card { background: var(--warm-white); border: 1px solid var(--divider); border-radius: 6px; padding: 2.5rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; max-width: 600px; transition: border-color 0.3s, transform 0.3s; }
+  .edu-card:hover { border-color: oklch(0.80 0.01 70); transform: translateY(-2px); }
   .edu-year { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--accent); line-height: 1; }
   .edu-school { font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.2rem; }
   .edu-major { font-size: 0.88rem; color: var(--muted); }
@@ -992,24 +1137,29 @@
         <h2 class="section-title">视频作品</h2>
     </div>
     <div class="video-strip reveal">
-        <div class="video-card">
-            <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="video-card" data-video="./VIDEO1.mp4">
+            <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata" poster="./VIDEO1.jpg"></video>
+            <div class="video-play-btn"></div>
             <p class="video-card-title">作品一</p>
         </div>
-        <div class="video-card">
-            <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="video-card" data-video="./VIDEO2.mp4">
+            <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata" poster="./VIDEO2.jpg"></video>
+            <div class="video-play-btn"></div>
             <p class="video-card-title">作品二</p>
         </div>
-        <div class="video-card">
-            <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="video-card" data-video="./VIDEO3.mp4">
+            <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata" poster="./VIDEO3.jpg"></video>
+            <div class="video-play-btn"></div>
             <p class="video-card-title">作品三</p>
         </div>
-        <div class="video-card">
-            <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="video-card" data-video="./VIDEO4.mp4">
+            <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata" poster="./VIDEO4.jpg"></video>
+            <div class="video-play-btn"></div>
             <p class="video-card-title">作品四</p>
         </div>
-        <div class="video-card">
-            <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="video-card" data-video="./VIDEO5.mp4">
+            <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata" poster="./VIDEO5.jpg"></video>
+            <div class="video-play-btn"></div>
             <p class="video-card-title">作品五</p>
         </div>
     </div>
@@ -1099,11 +1249,7 @@
   <div class="lightbox-counter"></div>
 </div>
 
-<!-- VIDEO LIGHTBOX -->
-<div class="video-lightbox" id="videoLightbox">
-  <button class="video-lightbox-close" aria-label="关闭">✕</button>
-  <video controls playsinline></video>
-</div>
+
 
 <!-- FOOTER -->
 <footer>
@@ -1183,31 +1329,48 @@
     if (e.key === 'ArrowRight') lightboxNext();
   });
 
-  // ── Video Lightbox ──
+  // ── Video Inline Playback ──
   const videoCards = document.querySelectorAll('.video-card');
-  const videoLightbox = document.getElementById('videoLightbox');
-  const videoEl = videoLightbox.querySelector('video');
 
   videoCards.forEach(card => {
+    const video = card.querySelector('video');
+    if (!video) return;
+
     card.addEventListener('click', () => {
-      const src = card.querySelector('video') ? card.querySelector('video').src : '';
-      if (!src) return;
-      videoEl.src = src;
-      videoLightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      videoEl.play().catch(() => {});
+      if (video.paused) {
+        // Pause all other videos first
+        document.querySelectorAll('.video-card video').forEach(v => {
+          if (v !== video) {
+            v.pause();
+            v.muted = true;
+            v.closest('.video-card').classList.remove('playing');
+          }
+        });
+        video.muted = false;
+        video.play().catch(() => {});
+        card.classList.add('playing');
+      } else {
+        video.pause();
+        video.muted = true;
+        card.classList.remove('playing');
+      }
+    });
+
+    video.addEventListener('ended', () => {
+      card.classList.remove('playing');
+      video.muted = true;
+      video.currentTime = 0;
     });
   });
 
-  function closeVideoLightbox() {
-    videoLightbox.classList.remove('active');
-    videoEl.pause();
-    videoEl.src = '';
-    document.body.style.overflow = '';
+  // Lazy load video poster on mobile
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll('.video-card video').forEach(v => {
+      if (!v.poster && v.dataset.poster) {
+        v.poster = v.dataset.poster;
+      }
+    });
   }
-  videoLightbox.querySelector('.video-lightbox-close').addEventListener('click', closeVideoLightbox);
-  videoLightbox.addEventListener('click', (e) => { if (e.target === videoLightbox) closeVideoLightbox(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && videoLightbox.classList.contains('active')) closeVideoLightbox(); });
 </script>
 
 </body>
