@@ -436,13 +436,14 @@
     content: '';
     position: absolute;
     inset: 0;
+    bottom: 3px;
     background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.5) 100%);
     pointer-events: none;
 }
 
 .video-card-title {
     position: absolute;
-    bottom: 1.2rem;
+    bottom: 1.8rem;
     left: 1.2rem;
     right: 1.2rem;
     font-family: 'Noto Serif SC', serif;
@@ -451,6 +452,101 @@
     color: var(--warm-white);
     z-index: 2;
     letter-spacing: 0.02em;
+}
+
+/* Play Button */
+.video-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--warm-white);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 3px;
+    transition: background 0.25s ease, transform 0.25s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.video-play-btn:hover {
+    background: rgba(0,0,0,0.75);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-card.playing .video-play-btn {
+    opacity: 0;
+}
+
+.video-card:hover.playing .video-play-btn {
+    opacity: 1;
+}
+
+/* Progress Bar */
+.video-progress-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.15);
+    z-index: 5;
+    cursor: pointer;
+}
+
+.video-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: none;
+    pointer-events: none;
+}
+
+.video-progress-wrap:hover {
+    height: 5px;
+}
+
+/* Mute Button */
+.video-mute-btn {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    z-index: 4;
+    background: rgba(0,0,0,0.45);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease, background 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    line-height: 1;
+    padding: 0;
+    color: var(--warm-white);
+}
+
+.video-card:hover .video-mute-btn {
+    opacity: 1;
+}
+
+.video-mute-btn:hover {
+    background: rgba(0,0,0,0.7);
 }
 
 .video-hint {
@@ -868,23 +964,38 @@
     </div>
     <div class="video-strip reveal">
         <div class="video-card">
-            <video src="VIDEO1.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO1.mp4" poster="VIDEO1.jpg" muted loop playsinline preload="none"></video>
+            <button class="video-play-btn" aria-label="播放">▶</button>
+            <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
             <p class="video-card-title">作品一</p>
         </div>
         <div class="video-card">
-            <video src="VIDEO2.mp4" poster="VIDEO1.jpg" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO2.mp4" poster="VIDEO2.jpg" muted loop playsinline preload="none"></video>
+            <button class="video-play-btn" aria-label="播放">▶</button>
+            <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
             <p class="video-card-title">作品二</p>
         </div>
         <div class="video-card">
-            <video src="VIDEO3.mp4" poster="VIDEO2.jpg" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO3.mp4" poster="VIDEO3.jpg" muted loop playsinline preload="none"></video>
+            <button class="video-play-btn" aria-label="播放">▶</button>
+            <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
             <p class="video-card-title">作品三</p>
         </div>
         <div class="video-card">
-            <video src="VIDEO4.mp4" poster="VIDEO3.jpg" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO4.mp4" poster="VIDEO4.jpg" muted loop playsinline preload="none"></video>
+            <button class="video-play-btn" aria-label="播放">▶</button>
+            <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
             <p class="video-card-title">作品四</p>
         </div>
         <div class="video-card">
-            <video src="VIDEO5.mp4" poster="VIDEO4.jpg" muted loop playsinline preload="metadata"></video>
+            <video src="VIDEO5.mp4" poster="VIDEO5.jpg" muted loop playsinline preload="none"></video>
+            <button class="video-play-btn" aria-label="播放">▶</button>
+            <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+            <button class="video-mute-btn" aria-label="切换声音">🔇</button>
             <p class="video-card-title">作品五</p>
         </div>
     </div>
@@ -1001,6 +1112,7 @@
 
 
 <script>
+  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1009,22 +1121,113 @@
       }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  // Back to top
   document.querySelector('.back-top').addEventListener('click', (e) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Video hover play/pause
-  document.querySelectorAll('.video-card video').forEach(video => {
-    video.addEventListener('mouseenter', () => video.play());
-    video.addEventListener('mouseleave', () => {
-      video.pause();
-      video.currentTime = 0;
+  // ── Video Controls ──
+  document.querySelectorAll('.video-card').forEach(card => {
+    const video = card.querySelector('video');
+    const playBtn = card.querySelector('.video-play-btn');
+    const progressWrap = card.querySelector('.video-progress-wrap');
+    const progressBar = card.querySelector('.video-progress-bar');
+    const muteBtn = card.querySelector('.video-mute-btn');
+
+    // Click play button → toggle play/pause
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePlay(video, card);
+    });
+
+    // Click on video itself also toggles
+    video.addEventListener('click', () => togglePlay(video, card));
+
+    // Update play button icon & card state
+    video.addEventListener('play', () => {
+      card.classList.add('playing');
+      playBtn.textContent = '⏸';
+      playBtn.setAttribute('aria-label', '暂停');
+    });
+    video.addEventListener('pause', () => {
+      card.classList.remove('playing');
+      playBtn.textContent = '▶';
+      playBtn.setAttribute('aria-label', '播放');
+    });
+
+    // Progress bar update
+    video.addEventListener('timeupdate', () => {
+      if (video.duration) {
+        progressBar.style.width = (video.currentTime / video.duration * 100) + '%';
+      }
+    });
+
+    // Reset progress on ended
+    video.addEventListener('ended', () => {
+      progressBar.style.width = '0%';
+    });
+
+    // Click on progress bar to seek
+    progressWrap.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!video.duration) return;
+      const rect = progressWrap.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      video.currentTime = ratio * video.duration;
+    });
+
+    // Mute toggle
+    muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      video.muted = !video.muted;
+      muteBtn.textContent = video.muted ? '🔇' : '🔊';
+    });
+
+    // Hover auto-play (only if already playing, don't auto-start)
+    card.addEventListener('mouseenter', () => {
+      if (video.preload === 'none') {
+        video.preload = 'metadata';
+        video.load();
+      }
     });
   });
+
+  function togglePlay(video, card) {
+    if (video.preload === 'none') {
+      video.preload = 'metadata';
+      video.load();
+    }
+    if (video.paused) {
+      // Pause all other videos first
+      document.querySelectorAll('.video-card video').forEach(v => {
+        if (v !== video && !v.paused) {
+          v.pause();
+          v.currentTime = 0;
+        }
+      });
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }
+
+  // Lazy load videos when they scroll near
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const video = entry.target;
+        if (video.preload === 'none') {
+          video.preload = 'metadata';
+          video.load();
+        }
+        videoObserver.unobserve(video);
+      }
+    });
+  }, { rootMargin: '200px' });
+  document.querySelectorAll('.video-card video').forEach(v => videoObserver.observe(v));
 </script>
 
 </body>
