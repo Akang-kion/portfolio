@@ -246,23 +246,56 @@
   }
 
   .section-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.25em;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
     font-weight: 500;
     font-family: 'DM Sans', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-label::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    flex-shrink: 0;
   }
 
   .section-title {
     font-family: 'Noto Serif SC', serif;
     font-weight: 700;
     font-size: clamp(2.4rem, 5.5vw, 4.2rem);
-    line-height: 1.2;
-    margin-bottom: 2rem;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
     letter-spacing: -0.01em;
     color: var(--ink);
+    position: relative;
+    padding-bottom: 1.2rem;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 48px;
+    height: 2px;
+    background: var(--ink);
+    opacity: 0.12;
   }
 
   /* ─── ABOUT ─── */
@@ -297,31 +330,41 @@
     padding: clamp(5rem, 12vw, 12rem) clamp(2rem, 8vw, 10rem);
     max-width: none;
     position: relative;
-    text-align: center;
   }
 
   .philosophy .reveal {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: left;
   }
 
-  .philosophy-quote::before {
-    left: 50%;
-    transform: translateX(-50%);
-    top: -2.5rem;
+  .philosophy .section-label {
+    color: var(--accent-soft);
   }
 
-  .philosophy .section-label { color: var(--accent-soft); }
+  .philosophy .section-label::before {
+    background: var(--accent-soft);
+  }
+
+  .philosophy .section-label::after {
+    background: linear-gradient(90deg, var(--accent-soft), transparent);
+  }
+
+  .philosophy .section-title::after {
+    background: var(--warm-white);
+    opacity: 0.1;
+  }
 
   .philosophy-quote {
     font-family: 'Noto Serif SC', serif;
     font-weight: 300;
     font-size: clamp(1.8rem, 4vw, 3.2rem);
     line-height: 1.9;
-    max-width: 750px;
+    max-width: 700px;
     position: relative;
     letter-spacing: 0.04em;
+    text-align: left;
   }
 
   .philosophy-quote::before {
@@ -329,10 +372,10 @@
     font-family: 'Playfair Display', serif;
     font-size: 8rem;
     position: absolute;
-    top: -2rem;
-    left: -1.5rem;
+    top: -2.5rem;
+    left: -2rem;
     color: var(--accent);
-    opacity: 0.3;
+    opacity: 0.25;
     line-height: 1;
   }
 
@@ -1006,6 +1049,7 @@
 <section class="philosophy">
   <div class="reveal">
     <p class="section-label">创作理念</p>
+    <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.4rem);">关于等待与光线</h2>
     <blockquote class="philosophy-quote">
       好的照片不是拍出来的，<br>
       是等出来的。<br>
@@ -1112,6 +1156,14 @@
     <h2 class="section-title">工作经历</h2>
   </div>
   <div class="work-timeline reveal">
+    <div class="work-item">
+      <div class="work-dot"></div>
+      <div class="work-date">2025.03 — 至今</div>
+      <div class="work-company">广东柏盛包装有限公司</div>
+      <div class="work-role">摄影 / 编导</div>
+      <div class="work-desc"><strong>负责公司宣传片、广告片、产品视频推广与国内外短视频的全流程制作</strong>，深度参与项目全周期，成功推动项目落地。与客户高效沟通，保障内容质量与交付进度。主导多个品牌合作项目，包括山姆/沃尔玛等知名品牌。</div>
+      <div class="work-tags"><span class="work-tag">全流程制作</span><span class="work-tag">品牌合作</span></div>
+    </div>
     <div class="work-item">
       <div class="work-dot"></div>
       <div class="work-date">2021.08 — 2025.02</div>
