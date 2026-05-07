@@ -354,12 +354,13 @@
     gap: 1.5rem;
     padding: 0 clamp(2rem, 8vw, 10rem);
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
   .gallery-strip::-webkit-scrollbar { display: none; }
+  .gallery-strip .clone { pointer-events: none; }
 
   .gallery-strip.dragging { cursor: grabbing; user-select: none; }
   .gallery-strip:not(.dragging) { cursor: grab; }
@@ -413,12 +414,13 @@
     gap: 1.5rem;
     padding: 0 clamp(2rem, 8vw, 10rem);
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
 
 .video-strip::-webkit-scrollbar { display: none; }
+.video-strip .clone { pointer-events: none; }
 
 .video-strip.dragging { cursor: grabbing; user-select: none; }
 .video-strip:not(.dragging) { cursor: grab; }
@@ -426,35 +428,87 @@
 /* ─── NAV ARROWS (desktop) ─── */
 .nav-arrows {
     display: flex;
-    gap: 0.8rem;
-    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 2rem;
     padding: 0 clamp(2rem, 8vw, 10rem);
 }
 
 .nav-arrow {
-    width: 44px;
-    height: 44px;
-    border: 1.5px solid var(--divider);
+    width: 52px;
+    height: 52px;
+    border: none;
     border-radius: 50%;
-    background: var(--paper);
+    background: transparent;
     color: var(--ink);
-    font-size: 1.1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-arrow:hover {
+.nav-arrow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    opacity: 0.2;
+    transition: opacity 0.35s ease;
+}
+
+.nav-arrow:hover::before {
+    opacity: 0.6;
+}
+
+.nav-arrow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
     background: var(--ink);
-    border-color: var(--ink);
-    color: var(--paper);
+    transform: scale(0);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-arrow:hover::after {
+    transform: scale(1);
+}
+
+.nav-arrow svg {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    z-index: 1;
+    stroke: var(--ink);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.35s ease;
+}
+
+.nav-arrow:hover svg {
+    stroke: var(--paper);
 }
 
 .nav-arrow:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
+}
+
+.nav-counter {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    min-width: 4rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 768px) {
@@ -940,8 +994,13 @@
   </div>
 
   <div class="nav-arrows reveal">
-    <button class="nav-arrow" data-target="gallery" data-dir="-1" aria-label="上一张">←</button>
-    <button class="nav-arrow" data-target="gallery" data-dir="1" aria-label="下一张">→</button>
+    <button class="nav-arrow" data-target="gallery" data-dir="-1" aria-label="上一张">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <span class="nav-counter" data-for="gallery">1 / 5</span>
+    <button class="nav-arrow" data-target="gallery" data-dir="1" aria-label="下一张">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
   </div>
   <p class="gallery-hint reveal">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="gallery"></span></span></p>
 </section>
@@ -989,8 +1048,13 @@
         </div>
     </div>
     <div class="nav-arrows">
-        <button class="nav-arrow" data-target="video" data-dir="-1" aria-label="上一个">←</button>
-        <button class="nav-arrow" data-target="video" data-dir="1" aria-label="下一个">→</button>
+        <button class="nav-arrow" data-target="video" data-dir="-1" aria-label="上一个">
+            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="nav-counter" data-for="video">1 / 5</span>
+        <button class="nav-arrow" data-target="video" data-dir="1" aria-label="下一个">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
     </div>
     <p class="video-hint">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="video"></span></span></p>
 </section>
@@ -1104,13 +1168,71 @@
   const videoThumb = document.querySelector('.scroll-bar-thumb[data-for="video"]');
   initScrollBar(videoStrip, videoThumb);
 
+  // ── Infinite Carousel Setup ──
+  function initInfiniteLoop(stripEl, cardSelector) {
+    if (!stripEl) return { realCount: 0 };
+    const cards = stripEl.querySelectorAll(cardSelector);
+    const realCount = cards.length;
+    if (realCount < 2) return { realCount };
+
+    // Clone all cards: prepend a copy of the last N, append a copy of the first N
+    const fragmentBefore = document.createDocumentFragment();
+    const fragmentAfter = document.createDocumentFragment();
+    cards.forEach(card => {
+      const cloneBefore = card.cloneNode(true);
+      const cloneAfter = card.cloneNode(true);
+      cloneBefore.classList.add('clone');
+      cloneAfter.classList.add('clone');
+      fragmentBefore.prepend(cloneBefore);
+      fragmentAfter.appendChild(cloneAfter);
+    });
+    stripEl.prepend(fragmentBefore);
+    stripEl.appendChild(fragmentAfter);
+
+    // Jump to the real first item (skip the prepended clones)
+    const getGap = () => parseFloat(getComputedStyle(stripEl).gap) || 24;
+    const getStep = () => {
+      const card = stripEl.querySelector(cardSelector + ':not(.clone)');
+      return card ? card.offsetWidth + getGap() : 300;
+    };
+
+    // Initial position: skip prepended clones
+    stripEl.scrollLeft = realCount * getStep();
+
+    // Boundary detection
+    let ticking = false;
+    stripEl.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const step = getStep();
+        const totalWidth = realCount * step;
+        const currentPos = stripEl.scrollLeft;
+
+        // Scrolled past the end clones → jump back to start
+        if (currentPos >= totalWidth * 2) {
+          stripEl.scrollLeft = currentPos - totalWidth;
+        }
+        // Scrolled before the start clones → jump forward to end
+        else if (currentPos <= 0) {
+          stripEl.scrollLeft = currentPos + totalWidth;
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+
+    return { realCount, getStep };
+  }
+
+  const galleryInfo = initInfiniteLoop(galleryStrip, '.gallery-card');
+  const videoInfo = initInfiniteLoop(videoStrip, '.video-card');
+
   // ── Drag to Scroll (desktop) ──
   function initDragScroll(stripEl) {
     if (!stripEl) return;
     let isDown = false, startX, scrollLeft;
 
     stripEl.addEventListener('mousedown', (e) => {
-      // Don't intercept clicks on buttons/links/videos
       if (e.target.closest('button, a, video')) return;
       isDown = true;
       stripEl.classList.add('dragging');
@@ -1140,23 +1262,47 @@
   initDragScroll(galleryStrip);
   initDragScroll(videoStrip);
 
-  // ── Arrow Navigation ──
+  // ── Arrow Navigation with Counter ──
+  function getCurrentIndex(stripEl, info) {
+    if (!stripEl || !info.realCount) return 0;
+    const step = info.getStep();
+    const offset = info.realCount * step; // skip prepended clones
+    const relPos = stripEl.scrollLeft - offset;
+    const idx = Math.round(relPos / step);
+    // Normalize to [0, realCount-1]
+    return ((idx % info.realCount) + info.realCount) % info.realCount;
+  }
+
+  function updateCounter(target, stripEl, info) {
+    const counter = document.querySelector(`.nav-counter[data-for="${target}"]`);
+    if (!counter || !info.realCount) return;
+    const idx = getCurrentIndex(stripEl, info);
+    counter.textContent = `${idx + 1} / ${info.realCount}`;
+  }
+
+  // Update counters on scroll
+  if (galleryStrip) galleryStrip.addEventListener('scroll', () => updateCounter('gallery', galleryStrip, galleryInfo), { passive: true });
+  if (videoStrip) videoStrip.addEventListener('scroll', () => updateCounter('video', videoStrip, videoInfo), { passive: true });
+
+  // Arrow click
   document.querySelectorAll('.nav-arrow').forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.target;
       const dir = parseInt(btn.dataset.dir);
       const strip = target === 'gallery' ? galleryStrip : videoStrip;
-      if (!strip) return;
-      const card = strip.querySelector('.gallery-card, .video-card');
-      if (!card) return;
-      const gap = parseFloat(getComputedStyle(strip).gap) || 24;
-      const step = card.offsetWidth + gap;
+      const info = target === 'gallery' ? galleryInfo : videoInfo;
+      if (!strip || !info.realCount) return;
+      const step = info.getStep();
       strip.scrollBy({ left: dir * step, behavior: 'smooth' });
     });
   });
 
+  // Init counters
+  updateCounter('gallery', galleryStrip, galleryInfo);
+  updateCounter('video', videoStrip, videoInfo);
+
   // ── Video Controls ──
-  document.querySelectorAll('.video-card').forEach(card => {
+  document.querySelectorAll('.video-card:not(.clone)').forEach(card => {
     const video = card.querySelector('video');
     const playBtn = card.querySelector('.video-play-btn');
     const progressWrap = card.querySelector('.video-progress-wrap');
@@ -1228,7 +1374,7 @@
     }
     if (video.paused) {
       // Pause all other videos first
-      document.querySelectorAll('.video-card video').forEach(v => {
+      document.querySelectorAll('.video-card:not(.clone) video').forEach(v => {
         if (v !== video && !v.paused) {
           v.pause();
           v.currentTime = 0;
@@ -1253,7 +1399,7 @@
       }
     });
   }, { rootMargin: '200px' });
-  document.querySelectorAll('.video-card video').forEach(v => videoObserver.observe(v));
+  document.querySelectorAll('.video-card:not(.clone) video').forEach(v => videoObserver.observe(v));
 </script>
 
 </body>
