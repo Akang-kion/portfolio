@@ -464,6 +464,92 @@
     .video-card { width: 75vw; }
 }
 
+/* ─── BTS (Behind the Scenes) ─── */
+.bts-section {
+    max-width: none;
+    padding: clamp(4rem, 10vw, 10rem) 0;
+}
+
+.bts-section .section-label,
+.bts-section .section-title {
+    padding: 0 clamp(2rem, 8vw, 10rem);
+}
+
+.bts-strip {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 clamp(2rem, 8vw, 10rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.bts-strip::-webkit-scrollbar { display: none; }
+
+.bts-card {
+    flex: 0 0 auto;
+    width: clamp(280px, 32vw, 420px);
+    aspect-ratio: 4/5;
+    background: var(--divider);
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.bts-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    filter: grayscale(30%) contrast(1.05);
+}
+
+.bts-card:hover img {
+    transform: scale(1.06);
+    filter: grayscale(0%) contrast(1);
+}
+
+.bts-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2.5rem 1.5rem 1.5rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.65) 100%);
+    z-index: 2;
+}
+
+.bts-caption {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--warm-white);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+}
+
+.bts-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    font-weight: 500;
+}
+
+.bts-hint {
+    padding: 1.5rem clamp(2rem, 8vw, 10rem) 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .bts-card { width: 80vw; }
+}
+
   /* ─── TIMELINE ─── */
   .timeline {
     position: relative;
@@ -805,7 +891,51 @@
     <p class="video-hint">← 左右滑动浏览更多 →</p>
 </section>
 
-
+<!-- BTS -->
+<section class="bts-section">
+    <div class="reveal">
+        <p class="section-label">Behind the Scenes</p>
+        <h2 class="section-title">幕后花絮</h2>
+    </div>
+    <div class="bts-strip reveal">
+        <div class="bts-card">
+            <img src="VIDEO1.jpg" alt="幕后一" loading="lazy">
+            <div class="bts-overlay">
+                <p class="bts-caption">光影之间</p>
+                <span class="bts-tag">人像拍摄</span>
+            </div>
+        </div>
+        <div class="bts-card">
+            <img src="VIDEO2.jpg" alt="幕后二" loading="lazy">
+            <div class="bts-overlay">
+                <p class="bts-caption">捕捉瞬间</p>
+                <span class="bts-tag">街拍纪实</span>
+            </div>
+        </div>
+        <div class="bts-card">
+            <img src="VIDEO3.jpg" alt="幕后三" loading="lazy">
+            <div class="bts-overlay">
+                <p class="bts-caption">自然之美</p>
+                <span class="bts-tag">风光摄影</span>
+            </div>
+        </div>
+        <div class="bts-card">
+            <img src="VIDEO4.jpg" alt="幕后四" loading="lazy">
+            <div class="bts-overlay">
+                <p class="bts-caption">商业合作</p>
+                <span class="bts-tag">品牌拍摄</span>
+            </div>
+        </div>
+        <div class="bts-card">
+            <img src="VIDEO5.jpg" alt="幕后五" loading="lazy">
+            <div class="bts-overlay">
+                <p class="bts-caption">创意探索</p>
+                <span class="bts-tag">创意摄影</span>
+            </div>
+        </div>
+    </div>
+    <p class="bts-hint">← 左右滑动浏览更多 →</p>
+</section>
 
 <!-- JOURNEY -->
 <section id="journey">
