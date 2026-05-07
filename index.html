@@ -59,26 +59,47 @@
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    filter: grayscale(100%) contrast(1.05);
-    transition: filter 1.2s ease;
+    filter: contrast(1.03) saturate(0.92);
+    transition: filter 0.8s ease;
   }
 
   .hero-photo:hover img {
-    filter: grayscale(30%) contrast(1);
+    filter: contrast(1) saturate(1);
   }
 
   .hero-photo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, var(--paper) 0%, oklch(0.97 0.005 80 / 0.85) 8%, oklch(0.97 0.005 80 / 0.6) 16%, oklch(0.97 0.005 80 / 0.3) 25%, transparent 40%);
+    background:
+      linear-gradient(90deg,
+        var(--paper) 0%,
+        oklch(0.97 0.005 80 / 0.92) 5%,
+        oklch(0.97 0.005 80 / 0.7) 12%,
+        oklch(0.97 0.005 80 / 0.45) 20%,
+        oklch(0.97 0.005 80 / 0.2) 30%,
+        oklch(0.97 0.005 80 / 0.05) 42%,
+        transparent 55%
+      ),
+      linear-gradient(180deg,
+        oklch(0.97 0.005 80 / 0.3) 0%,
+        transparent 15%,
+        transparent 85%,
+        oklch(0.97 0.005 80 / 0.25) 100%
+      );
     pointer-events: none;
   }
 
   /* Mobile: gradient from bottom */
   @media (max-width: 768px) {
     .hero-photo::after {
-      background: linear-gradient(180deg, transparent 30%, oklch(0.97 0.005 80 / 0.4) 60%, var(--paper) 100%);
+      background:
+        linear-gradient(180deg,
+          transparent 40%,
+          oklch(0.97 0.005 80 / 0.15) 60%,
+          oklch(0.97 0.005 80 / 0.5) 78%,
+          var(--paper) 100%
+        );
     }
   }
 
@@ -95,10 +116,10 @@
 
   .hero-name {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 900;
-    font-size: clamp(3rem, 7vw, 7rem);
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    font-weight: 700;
+    font-size: clamp(3.2rem, 7.5vw, 7.5rem);
+    letter-spacing: 0.08em;
+    line-height: 1.1;
     color: var(--ink);
   }
 
@@ -132,8 +153,9 @@
   .hero-subtitle {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(1rem, 1.6vw, 1.3rem);
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
     color: var(--muted);
+    letter-spacing: 0.08em;
     opacity: 0;
     animation: fadeUp 0.6s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
@@ -224,58 +246,59 @@
   }
 
   .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 1rem;
-    font-weight: 500;
+    margin-bottom: 1.2rem;
+    font-weight: 400;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.8rem;
+    font-family: 'DM Sans', sans-serif;
   }
 
   .section-label::before {
     content: '';
     display: inline-block;
-    width: 18px;
+    width: 24px;
     height: 1px;
     background: var(--accent);
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   .section-title {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 700;
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
-    line-height: 1.2;
-    margin-bottom: 2.5rem;
-    letter-spacing: -0.01em;
+    font-weight: 200;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.25;
+    margin-bottom: 2.8rem;
+    letter-spacing: 0.04em;
     position: relative;
     display: inline-block;
+    color: var(--ink);
   }
 
   .section-title::after {
     content: '';
     display: block;
-    width: 40px;
-    height: 2px;
-    background: var(--accent);
-    margin-top: 0.8rem;
-    opacity: 0.6;
-  }
-
-  /* Centered title variant for philosophy */
-  .section-title--center::after {
-    margin-left: auto;
-    margin-right: auto;
+    width: 32px;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--accent), oklch(0.50 0.16 25 / 0.2));
+    margin-top: 1rem;
   }
 
   /* ─── ABOUT ─── */
   .about-text p {
-    margin-bottom: 1.5rem;
-    font-size: 1.05rem;
-    color: oklch(0.3 0.02 60);
+    margin-bottom: 1.8rem;
+    font-size: 1.02rem;
+    color: oklch(0.32 0.015 60);
+    line-height: 1.9;
+    letter-spacing: 0.01em;
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
   }
 
   .about-text p:first-of-type::first-letter {
@@ -315,12 +338,12 @@
 
   .philosophy-quote {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 300;
-    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
-    line-height: 1.8;
-    max-width: 800px;
+    font-weight: 200;
+    font-size: clamp(1.6rem, 3.8vw, 3rem);
+    line-height: 2;
+    max-width: 750px;
     position: relative;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.06em;
   }
 
   .philosophy-quote::before {
@@ -376,8 +399,9 @@
 
   .expertise-name {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 600;
-    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 400;
+    font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+    letter-spacing: 0.03em;
   }
 
   .expertise-desc {
@@ -577,6 +601,57 @@
     letter-spacing: 0.05em;
 }
 
+/* ─── VIDEO PROGRESS BAR ─── */
+.video-progress-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0 0.8rem 0.6rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.video-card:hover .video-progress-wrap,
+.video-card.playing .video-progress-wrap {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.video-progress-bar {
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    width: 0;
+    transition: width 0.15s linear;
+}
+
+.video-progress-bar:hover {
+    height: 5px;
+}
+
+.video-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.3rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+}
+
 @media (max-width: 768px) {
     .video-card { width: 75vw; }
     .video-card video { object-fit: cover; }
@@ -634,9 +709,10 @@
 
   .timeline-title {
     font-family: 'Noto Serif SC', serif;
-    font-weight: 600;
-    font-size: 1.2rem;
+    font-weight: 400;
+    font-size: 1.1rem;
     margin-bottom: 0.3rem;
+    letter-spacing: 0.02em;
   }
 
   .timeline-desc {
@@ -769,7 +845,7 @@
   .work-item:last-child { padding-bottom: 0; }
   .work-dot { position: absolute; left: -3rem; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); transform: translateX(-4px); }
   .work-date { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--accent); margin-bottom: 0.3rem; }
-  .work-company { font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 0.2rem; }
+  .work-company { font-family: 'Noto Serif SC', serif; font-weight: 500; font-size: 1.1rem; margin-bottom: 0.2rem; letter-spacing: 0.02em; }
   .work-role { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; letter-spacing: 0.02em; }
   .work-desc { font-size: 0.9rem; color: oklch(0.3 0.02 60); line-height: 1.7; }
   .work-desc strong { color: var(--ink); font-weight: 500; }
@@ -783,7 +859,7 @@
   .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
   .project-card:hover::before { opacity: 1; }
   .project-type { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.8rem; }
-  .project-title { font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; line-height: 1.4; }
+  .project-title { font-family: 'Noto Serif SC', serif; font-weight: 400; font-size: 0.98rem; margin-bottom: 0.6rem; line-height: 1.5; letter-spacing: 0.02em; }
   .project-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
   .project-placeholder { margin-top: 1rem; height: 80px; border-radius: 4px; border: 1px dashed var(--divider); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; color: var(--muted); font-style: italic; }
 
@@ -807,7 +883,7 @@
   .edu-card { background: var(--warm-white); border: 1px solid var(--divider); border-radius: 6px; padding: 2.5rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; max-width: 600px; transition: border-color 0.3s, transform 0.3s; }
   .edu-card:hover { border-color: oklch(0.80 0.01 70); transform: translateY(-2px); }
   .edu-year { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--accent); line-height: 1; }
-  .edu-school { font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .edu-school { font-family: 'Noto Serif SC', serif; font-weight: 400; font-size: 1.05rem; margin-bottom: 0.2rem; letter-spacing: 0.02em; }
   .edu-major { font-size: 0.88rem; color: var(--muted); }
   .edu-degree { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
 
@@ -1140,26 +1216,46 @@
         <div class="video-card" data-video="./VIDEO1.mp4">
             <video src="./VIDEO1.mp4" muted loop playsinline preload="metadata" poster="./VIDEO1.jpg"></video>
             <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
             <p class="video-card-title">作品一</p>
         </div>
         <div class="video-card" data-video="./VIDEO2.mp4">
             <video src="./VIDEO2.mp4" muted loop playsinline preload="metadata" poster="./VIDEO2.jpg"></video>
             <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
             <p class="video-card-title">作品二</p>
         </div>
         <div class="video-card" data-video="./VIDEO3.mp4">
             <video src="./VIDEO3.mp4" muted loop playsinline preload="metadata" poster="./VIDEO3.jpg"></video>
             <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
             <p class="video-card-title">作品三</p>
         </div>
         <div class="video-card" data-video="./VIDEO4.mp4">
             <video src="./VIDEO4.mp4" muted loop playsinline preload="metadata" poster="./VIDEO4.jpg"></video>
             <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
             <p class="video-card-title">作品四</p>
         </div>
         <div class="video-card" data-video="./VIDEO5.mp4">
             <video src="./VIDEO5.mp4" muted loop playsinline preload="metadata" poster="./VIDEO5.jpg"></video>
             <div class="video-play-btn"></div>
+            <div class="video-progress-wrap">
+                <div class="video-progress-bar"><div class="video-progress-fill"></div></div>
+                <div class="video-time"><span class="v-time-cur">0:00</span><span class="v-time-dur">0:00</span></div>
+            </div>
             <p class="video-card-title">作品五</p>
         </div>
     </div>
@@ -1329,16 +1425,50 @@
     if (e.key === 'ArrowRight') lightboxNext();
   });
 
-  // ── Video Inline Playback ──
+  // ── Video Inline Playback + Progress ──
+  function fmtTime(s) {
+    if (isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
   const videoCards = document.querySelectorAll('.video-card');
 
   videoCards.forEach(card => {
     const video = card.querySelector('video');
+    const progressFill = card.querySelector('.video-progress-fill');
+    const progressBar = card.querySelector('.video-progress-bar');
+    const timeCur = card.querySelector('.v-time-cur');
+    const timeDur = card.querySelector('.v-time-dur');
     if (!video) return;
 
-    card.addEventListener('click', () => {
+    // Duration
+    video.addEventListener('loadedmetadata', () => {
+      if (timeDur) timeDur.textContent = fmtTime(video.duration);
+    });
+
+    // Progress update
+    video.addEventListener('timeupdate', () => {
+      if (!progressFill || !timeCur) return;
+      const pct = (video.currentTime / video.duration) * 100;
+      progressFill.style.width = pct + '%';
+      timeCur.textContent = fmtTime(video.currentTime);
+    });
+
+    // Click to seek
+    if (progressBar) {
+      progressBar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = progressBar.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        video.currentTime = ratio * video.duration;
+      });
+    }
+
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.video-progress-bar')) return;
       if (video.paused) {
-        // Pause all other videos first
         document.querySelectorAll('.video-card video').forEach(v => {
           if (v !== video) {
             v.pause();
@@ -1360,17 +1490,9 @@
       card.classList.remove('playing');
       video.muted = true;
       video.currentTime = 0;
+      if (progressFill) progressFill.style.width = '0';
     });
   });
-
-  // Lazy load video poster on mobile
-  if (window.innerWidth <= 768) {
-    document.querySelectorAll('.video-card video').forEach(v => {
-      if (!v.poster && v.dataset.poster) {
-        v.poster = v.dataset.poster;
-      }
-    });
-  }
 </script>
 
 </body>
