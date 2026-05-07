@@ -427,19 +427,21 @@
 
   /* ─── GALLERY ─── */
   .gallery-section {
-    max-width: none;
-    padding: clamp(4rem, 10vw, 10rem) 0;
+    max-width: 1200px;
+    padding: clamp(6rem, 14vw, 14rem) clamp(2rem, 8vw, 10rem);
+    margin: 0 auto;
   }
 
   .gallery-section .section-label,
   .gallery-section .section-title {
-    padding: 0 clamp(2rem, 8vw, 10rem);
+    padding: 0;
   }
 
   .gallery-strip {
     display: flex;
     gap: 1.5rem;
-    padding: 0 clamp(2rem, 8vw, 10rem);
+    padding: 0;
+    margin-top: 2.5rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -472,7 +474,7 @@
   }
 
   .gallery-hint {
-    padding: 1.5rem clamp(2rem, 8vw, 10rem) 0;
+    padding: 1.5rem 0 0;
     font-size: 0.8rem;
     color: var(--muted);
     letter-spacing: 0.05em;
@@ -480,19 +482,21 @@
 
 /* ─── VIDEO ─── */
 .video-section {
-    max-width: none;
-    padding: clamp(4rem, 10vw, 10rem) 0;
+    max-width: 1200px;
+    padding: clamp(6rem, 14vw, 14rem) clamp(2rem, 8vw, 10rem);
+    margin: 0 auto;
 }
 
 .video-section .section-label,
 .video-section .section-title {
-    padding: 0 clamp(2rem, 8vw, 10rem);
+    padding: 0;
 }
 
 .video-strip {
     display: flex;
     gap: 1.5rem;
-    padding: 0 clamp(2rem, 8vw, 10rem);
+    padding: 0;
+    margin-top: 2.5rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -613,7 +617,7 @@
 }
 
 .video-hint {
-    padding: 1.5rem clamp(2rem, 8vw, 10rem) 0;
+    padding: 1.5rem 0 0;
     font-size: 0.8rem;
     color: var(--muted);
     letter-spacing: 0.05em;
@@ -1042,7 +1046,7 @@
     align-items: center;
     gap: 1.5rem;
     margin-top: 2rem;
-    padding: 0 clamp(2rem, 8vw, 10rem);
+    padding: 0;
   }
 
   .strip-arrow {
@@ -2171,3 +2175,4 @@ updateActiveNav();
 
 </body>
 </html>
+
