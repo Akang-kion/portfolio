@@ -281,6 +281,154 @@
     .about-highlights { grid-template-columns: 1fr; }
   }
 
+  /* ─── PHILOSOPHY ─── */
+  .philosophy {
+    padding: var(--section-py) 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .philosophy-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-4px); }
+
+  .philosophy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .philosophy-card:hover::before { opacity: 1; }
+
+  .philosophy-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .philosophy-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .philosophy-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .philosophy-quote {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 2.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+  }
+
+  .philosophy-quote::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--accent);
+    opacity: 0.3;
+    position: absolute;
+    top: 0.5rem; left: 1.5rem;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+
+  .philosophy-quote p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    font-style: italic;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .philosophy-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── DOMAINS ─── */
+  .domains { padding: var(--section-py) 0; }
+
+  .domains-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .domain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .domain-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px var(--accent-glow);
+  }
+
+  .domain-icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 1.2rem;
+    border-radius: 14px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    transition: transform 0.3s;
+  }
+
+  .domain-card:hover .domain-icon { transform: scale(1.1) rotate(-3deg); }
+
+  .domain-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .domain-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 1024px) { .domains-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .domains-grid { grid-template-columns: 1fr; } }
+
   /* ─── SKILLS ─── */
   .skills {
     padding: var(--section-py) 0;
@@ -411,79 +559,230 @@
   /* ─── GALLERY ─── */
   .gallery-section { padding: var(--section-py) 0 0; }
 
-  .gallery-strip {
-    display: flex;
-    gap: 1.2rem;
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
     padding: 0 clamp(20px, 4vw, 60px);
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    cursor: grab;
   }
 
-  .gallery-strip::-webkit-scrollbar { display: none; }
-  .gallery-strip.dragging { cursor: grabbing; user-select: none; }
-  .gallery-strip .clone { pointer-events: none; }
-
-  .gallery-card {
-    flex: 0 0 auto;
-    width: clamp(260px, 28vw, 360px);
+  .gallery-item {
     aspect-ratio: 3/4;
     border-radius: var(--radius);
     overflow: hidden;
-    scroll-snap-align: start;
+    cursor: pointer;
+    position: relative;
   }
 
-  .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-  .gallery-card:hover img { transform: scale(1.05); }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: grayscale(20%);
+  }
+
+  .gallery-item:hover img { transform: scale(1.08); filter: grayscale(0%); }
+
+  .gallery-item .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.2rem;
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  .gallery-overlay span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox.active { display: flex; opacity: 1; }
+
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    cursor: default;
+    transform: scale(0.9);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .lightbox.active .lightbox-img { transform: scale(1); }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    width: 44px; height: 44px;
+    border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px;
+    border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+
+  .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+  .lightbox-nav.prev { left: 1.5rem; }
+  .lightbox-nav.next { right: 1.5rem; }
+  .lightbox-nav svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%; transform: translateX(-50%);
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    font-variant-numeric: tabular-nums;
+  }
 
   /* ─── VIDEO ─── */
   .video-section { padding: var(--section-py) 0 0; }
 
-  .video-strip {
-    display: flex;
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.2rem;
     padding: 0 clamp(20px, 4vw, 60px);
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    cursor: grab;
   }
 
-  .video-strip::-webkit-scrollbar { display: none; }
-  .video-strip.dragging { cursor: grabbing; user-select: none; }
-  .video-strip .clone { pointer-events: none; }
-
   .video-card {
-    flex: 0 0 auto;
-    width: clamp(240px, 22vw, 320px);
     aspect-ratio: 9/16;
     background: var(--bg-elevated);
     border-radius: var(--radius);
     overflow: hidden;
-    scroll-snap-align: start;
     position: relative;
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
   }
 
-  .video-placeholder {
+  .video-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .video-card .video-thumb {
     width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .video-card:hover .video-thumb { transform: scale(1.05); }
+
+  .video-card .video-play {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.8rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
+    gap: 0.6rem;
+    background: rgba(0,0,0,0.3);
+    transition: background 0.3s;
   }
 
-  .video-placeholder svg {
-    width: 32px; height: 32px;
-    stroke: var(--text-muted);
-    fill: none;
-    stroke-width: 1.5;
-    opacity: 0.5;
+  .video-card:hover .video-play { background: rgba(0,0,0,0.5); }
+
+  .video-play-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    border: 1.5px solid rgba(255,255,255,0.2);
+  }
+
+  .video-card:hover .video-play-icon {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  .video-play-icon svg { width: 22px; height: 22px; fill: #fff; stroke: none; margin-left: 3px; }
+
+  .video-play span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+
+  /* ─── VIDEO LIGHTBOX ─── */
+  .video-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(20px);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .video-lightbox.active { display: flex; opacity: 1; }
+
+  .video-lightbox-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    width: 44px; height: 44px;
+    border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+    z-index: 10;
+  }
+
+  .video-lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  .video-lightbox video {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    background: #000;
   }
 
   /* ─── NAV ARROWS ─── */
@@ -670,8 +969,13 @@
     }
     .hero-photo { min-height: 360px; order: -1; }
     .hero-stats { gap: 2rem; }
-    .gallery-card { width: 75vw; }
-    .video-card { width: 65vw; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .video-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -682,6 +986,8 @@
   <a href="#" class="nav-logo">马诒康</a>
   <ul class="nav-links">
     <li><a href="#about">关于</a></li>
+    <li><a href="#philosophy">理念</a></li>
+    <li><a href="#domains">领域</a></li>
     <li><a href="#skills">技能</a></li>
     <li><a href="#experience">经历</a></li>
     <li><a href="#projects">项目</a></li>
@@ -695,12 +1001,18 @@
 <div class="mobile-nav">
   <button class="mobile-nav-close" onclick="this.parentElement.classList.remove('open')">✕</button>
   <a href="#about" onclick="this.parentElement.classList.remove('open')">关于</a>
+  <a href="#philosophy" onclick="this.parentElement.classList.remove('open')">理念</a>
+  <a href="#domains" onclick="this.parentElement.classList.remove('open')">领域</a>
   <a href="#skills" onclick="this.parentElement.classList.remove('open')">技能</a>
   <a href="#experience" onclick="this.parentElement.classList.remove('open')">经历</a>
   <a href="#projects" onclick="this.parentElement.classList.remove('open')">项目</a>
   <a href="#works" onclick="this.parentElement.classList.remove('open')">作品</a>
   <a href="#contact" onclick="this.parentElement.classList.remove('open')">联系</a>
 </div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  PART 1: ORIGINAL HOMEPAGE SECTIONS (PRESERVED)   -->
+<!-- ═══════════════════════════════════════════════════ -->
 
 <!-- HERO -->
 <header class="hero container">
@@ -765,6 +1077,72 @@
     </div>
   </div>
 </section>
+
+<!-- PHILOSOPHY (RESTORED ORIGINAL) -->
+<section id="philosophy" class="philosophy">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Philosophy</div>
+      <h2 class="section-title">创作理念</h2>
+      <p class="section-subtitle">影像不只是技术，更是一种看待世界的方式</p>
+    </div>
+    <div class="philosophy-grid reveal">
+      <div class="philosophy-card">
+        <span class="philosophy-icon">👁️</span>
+        <div class="philosophy-title">观察先行</div>
+        <div class="philosophy-desc">在按下快门前，先学会安静地观察。最好的画面，往往藏在最容易被忽略的角落。</div>
+      </div>
+      <div class="philosophy-card">
+        <span class="philosophy-icon">💡</span>
+        <div class="philosophy-title">以光叙事</div>
+        <div class="philosophy-desc">光线是影像的灵魂。不同的光影组合，能赋予同一个场景完全不同的情绪和故事。</div>
+      </div>
+      <div class="philosophy-card">
+        <span class="philosophy-icon">🎭</span>
+        <div class="philosophy-title">情感共鸣</div>
+        <div class="philosophy-desc">技术服务于情感。真正打动人的作品，不是参数的堆砌，而是能让人感受到什么。</div>
+      </div>
+    </div>
+    <div class="philosophy-quote reveal">
+      <p>我相信，真正打动人心的影像，来自对生活的真切感受，而非技巧的堆砌。每一次拍摄，都是一次与被摄对象的深度对话。</p>
+    </div>
+  </div>
+</section>
+
+<!-- DOMAINS (RESTORED ORIGINAL) -->
+<section id="domains" class="domains container">
+  <div class="section-header reveal">
+    <div class="section-tag">Domains</div>
+    <h2 class="section-title">专业领域</h2>
+    <p class="section-subtitle">覆盖影视制作全链路，从创意到交付</p>
+  </div>
+  <div class="domains-grid reveal">
+    <div class="domain-card">
+      <div class="domain-icon">🎬</div>
+      <div class="domain-title">宣传片</div>
+      <div class="domain-desc">企业形象片、品牌宣传片，精准传达品牌价值与理念</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon">📺</div>
+      <div class="domain-title">纪录片</div>
+      <div class="domain-desc">真实记录，深度叙事，用影像留存珍贵的故事与记忆</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon">✨</div>
+      <div class="domain-title">广告片</div>
+      <div class="domain-desc">品牌广告、产品广告，以创意视觉驱动商业传播</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon">📱</div>
+      <div class="domain-title">短视频</div>
+      <div class="domain-desc">抖音、直播内容，紧跟流量趋势，高效产出爆款内容</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  PART 2: RESUME CONTENT (NEW INTEGRATION)         -->
+<!-- ═══════════════════════════════════════════════════ -->
 
 <!-- SKILLS -->
 <section id="skills" class="skills">
@@ -932,7 +1310,7 @@
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- GALLERY (IMPROVED) -->
 <section id="works" class="gallery-section">
   <div class="container">
     <div class="section-header reveal">
@@ -941,22 +1319,41 @@
       <p class="section-subtitle">镜头下的每一个瞬间，都是对世界的一次重新理解</p>
     </div>
   </div>
-  <div class="gallery-strip reveal">
-    <div class="gallery-card"><img src="./image/160-600x800.jpg" alt="人像作品" loading="lazy"></div>
-    <div class="gallery-card"><img src="./image/316-600x800.jpg" alt="风光作品" loading="lazy"></div>
-    <div class="gallery-card"><img src="./image/435-600x800.jpg" alt="纪实作品" loading="lazy"></div>
-    <div class="gallery-card"><img src="./image/1068-600x800.jpg" alt="街拍作品" loading="lazy"></div>
-    <div class="gallery-card"><img src="./image/542-600x800.jpg" alt="光影作品" loading="lazy"></div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item" data-index="0">
+      <img src="./image/160-600x800.jpg" alt="人像作品" loading="lazy">
+      <div class="gallery-overlay"><span>人像作品</span></div>
+    </div>
+    <div class="gallery-item" data-index="1">
+      <img src="./image/316-600x800.jpg" alt="风光作品" loading="lazy">
+      <div class="gallery-overlay"><span>风光作品</span></div>
+    </div>
+    <div class="gallery-item" data-index="2">
+      <img src="./image/435-600x800.jpg" alt="纪实作品" loading="lazy">
+      <div class="gallery-overlay"><span>纪实作品</span></div>
+    </div>
+    <div class="gallery-item" data-index="3">
+      <img src="./image/1068-600x800.jpg" alt="街拍作品" loading="lazy">
+      <div class="gallery-overlay"><span>街拍作品</span></div>
+    </div>
+    <div class="gallery-item" data-index="4">
+      <img src="./image/542-600x800.jpg" alt="光影作品" loading="lazy">
+      <div class="gallery-overlay"><span>光影作品</span></div>
+    </div>
   </div>
-  <div class="nav-arrows reveal">
-    <button class="nav-arrow" data-target="gallery" data-dir="-1" aria-label="上一张"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <span class="nav-counter" data-for="gallery">1 / 5</span>
-    <button class="nav-arrow" data-target="gallery" data-dir="1" aria-label="下一张"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-  </div>
-  <p class="strip-hint reveal">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="gallery"></span></span></p>
+  <p class="strip-hint reveal">点击图片查看大图</p>
 </section>
 
-<!-- VIDEO -->
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="关闭">✕</button>
+  <button class="lightbox-nav prev" aria-label="上一张"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <img class="lightbox-img" src="" alt="">
+  <button class="lightbox-nav next" aria-label="下一张"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <div class="lightbox-counter"></div>
+</div>
+
+<!-- VIDEO (IMPROVED) -->
 <section class="video-section">
   <div class="container">
     <div class="section-header reveal">
@@ -965,30 +1362,51 @@
       <p class="section-subtitle">每一帧画面，都在讲述一个故事</p>
     </div>
   </div>
-  <div class="video-strip reveal">
-    <div class="video-card">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>作品一 · 待上传</span></div>
+  <div class="video-grid reveal">
+    <div class="video-card" data-video="./VIDEO1.mp4" data-thumb="./VIDEO1.jpg">
+      <img class="video-thumb" src="./VIDEO1.jpg" alt="作品一" loading="lazy">
+      <div class="video-play">
+        <div class="video-play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+        <span>作品一</span>
+      </div>
     </div>
-    <div class="video-card">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>作品二 · 待上传</span></div>
+    <div class="video-card" data-video="./VIDEO2.mp4" data-thumb="./VIDEO2.jpg">
+      <img class="video-thumb" src="./VIDEO2.jpg" alt="作品二" loading="lazy">
+      <div class="video-play">
+        <div class="video-play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+        <span>作品二</span>
+      </div>
     </div>
-    <div class="video-card">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>作品三 · 待上传</span></div>
+    <div class="video-card" data-video="./VIDEO3.mp4" data-thumb="./VIDEO3.jpg">
+      <img class="video-thumb" src="./VIDEO3.jpg" alt="作品三" loading="lazy">
+      <div class="video-play">
+        <div class="video-play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+        <span>作品三</span>
+      </div>
     </div>
-    <div class="video-card">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>作品四 · 待上传</span></div>
+    <div class="video-card" data-video="./VIDEO4.mp4" data-thumb="./VIDEO4.jpg">
+      <img class="video-thumb" src="./VIDEO4.jpg" alt="作品四" loading="lazy">
+      <div class="video-play">
+        <div class="video-play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+        <span>作品四</span>
+      </div>
     </div>
-    <div class="video-card">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>作品五 · 待上传</span></div>
+    <div class="video-card" data-video="./VIDEO5.mp4" data-thumb="./VIDEO5.jpg">
+      <img class="video-thumb" src="./VIDEO5.jpg" alt="作品五" loading="lazy">
+      <div class="video-play">
+        <div class="video-play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div>
+        <span>作品五</span>
+      </div>
     </div>
   </div>
-  <div class="nav-arrows">
-    <button class="nav-arrow" data-target="video" data-dir="-1" aria-label="上一个"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <span class="nav-counter" data-for="video">1 / 5</span>
-    <button class="nav-arrow" data-target="video" data-dir="1" aria-label="下一个"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-  </div>
-  <p class="strip-hint">← 左右滑动浏览更多 → <span class="scroll-bar"><span class="scroll-bar-thumb" data-for="video"></span></span></p>
+  <p class="strip-hint">点击播放视频</p>
 </section>
+
+<!-- VIDEO LIGHTBOX -->
+<div class="video-lightbox" id="videoLightbox">
+  <button class="video-lightbox-close" aria-label="关闭">✕</button>
+  <video controls playsinline></video>
+</div>
 
 <!-- EDUCATION -->
 <section id="education" class="education container">
@@ -1062,137 +1480,105 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // ── Scrollbar Indicators ──
-  function initScrollBar(stripEl, thumbEl) {
-    if (!stripEl || !thumbEl) return;
-    const update = () => {
-      const maxScroll = stripEl.scrollWidth - stripEl.clientWidth;
-      if (maxScroll <= 0) { thumbEl.style.width = '100%'; return; }
-      const ratio = stripEl.clientWidth / stripEl.scrollWidth;
-      const pos = stripEl.scrollLeft / maxScroll;
-      thumbEl.style.width = Math.max(ratio * 100, 10) + '%';
-      thumbEl.style.marginLeft = (pos * (100 - ratio * 100)) + '%';
-    };
-    stripEl.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+  // ── Gallery Lightbox ──
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const lightboxCounter = lightbox.querySelector('.lightbox-counter');
+  let currentLightboxIndex = 0;
+
+  const galleryImages = Array.from(galleryItems).map(item => ({
+    src: item.querySelector('img').src,
+    alt: item.querySelector('img').alt
+  }));
+
+  function openLightbox(index) {
+    currentLightboxIndex = index;
+    updateLightbox();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
-  const galleryStrip = document.querySelector('.gallery-strip');
-  const galleryThumb = document.querySelector('.scroll-bar-thumb[data-for="gallery"]');
-  initScrollBar(galleryStrip, galleryThumb);
-
-  const videoStrip = document.querySelector('.video-strip');
-  const videoThumb = document.querySelector('.scroll-bar-thumb[data-for="video"]');
-  initScrollBar(videoStrip, videoThumb);
-
-  // ── Infinite Carousel ──
-  function initInfiniteLoop(stripEl, cardSelector) {
-    if (!stripEl) return { realCount: 0 };
-    const cards = stripEl.querySelectorAll(cardSelector);
-    const realCount = cards.length;
-    if (realCount < 2) return { realCount };
-
-    const fragmentBefore = document.createDocumentFragment();
-    const fragmentAfter = document.createDocumentFragment();
-    cards.forEach(card => {
-      const cloneBefore = card.cloneNode(true);
-      const cloneAfter = card.cloneNode(true);
-      cloneBefore.classList.add('clone');
-      cloneAfter.classList.add('clone');
-      fragmentBefore.prepend(cloneBefore);
-      fragmentAfter.appendChild(cloneAfter);
-    });
-    stripEl.prepend(fragmentBefore);
-    stripEl.appendChild(fragmentAfter);
-
-    const getGap = () => parseFloat(getComputedStyle(stripEl).gap) || 19;
-    const getStep = () => {
-      const card = stripEl.querySelector(cardSelector + ':not(.clone)');
-      return card ? card.offsetWidth + getGap() : 300;
-    };
-
-    stripEl.scrollLeft = realCount * getStep();
-
-    let ticking = false;
-    stripEl.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const step = getStep();
-        const totalWidth = realCount * step;
-        const currentPos = stripEl.scrollLeft;
-        if (currentPos >= totalWidth * 2) {
-          stripEl.scrollLeft = currentPos - totalWidth;
-        } else if (currentPos <= 0) {
-          stripEl.scrollLeft = currentPos + totalWidth;
-        }
-        ticking = false;
-      });
-    }, { passive: true });
-
-    return { realCount, getStep };
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
-  const galleryInfo = initInfiniteLoop(galleryStrip, '.gallery-card');
-  const videoInfo = initInfiniteLoop(videoStrip, '.video-card');
-
-  // ── Drag to Scroll ──
-  function initDragScroll(stripEl) {
-    if (!stripEl) return;
-    let isDown = false, startX, scrollLeft;
-    stripEl.addEventListener('mousedown', (e) => {
-      if (e.target.closest('button, a, video')) return;
-      isDown = true;
-      stripEl.classList.add('dragging');
-      startX = e.pageX - stripEl.offsetLeft;
-      scrollLeft = stripEl.scrollLeft;
-    });
-    stripEl.addEventListener('mouseleave', () => { isDown = false; stripEl.classList.remove('dragging'); });
-    stripEl.addEventListener('mouseup', () => { isDown = false; stripEl.classList.remove('dragging'); });
-    stripEl.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - stripEl.offsetLeft;
-      stripEl.scrollLeft = scrollLeft - (x - startX) * 1.5;
-    });
+  function updateLightbox() {
+    lightboxImg.src = galleryImages[currentLightboxIndex].src;
+    lightboxImg.alt = galleryImages[currentLightboxIndex].alt;
+    lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${galleryImages.length}`;
   }
 
-  initDragScroll(galleryStrip);
-  initDragScroll(videoStrip);
-
-  // ── Arrow Navigation ──
-  function getCurrentIndex(stripEl, info) {
-    if (!stripEl || !info.realCount) return 0;
-    const step = info.getStep();
-    const offset = info.realCount * step;
-    const idx = Math.round((stripEl.scrollLeft - offset) / step);
-    return ((idx % info.realCount) + info.realCount) % info.realCount;
+  function lightboxPrev() {
+    currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+    updateLightbox();
   }
 
-  function updateCounter(target, stripEl, info) {
-    const counter = document.querySelector(`.nav-counter[data-for="${target}"]`);
-    if (!counter || !info.realCount) return;
-    const idx = getCurrentIndex(stripEl, info);
-    counter.textContent = `${idx + 1} / ${info.realCount}`;
+  function lightboxNext() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+    updateLightbox();
   }
 
-  if (galleryStrip) galleryStrip.addEventListener('scroll', () => updateCounter('gallery', galleryStrip, galleryInfo), { passive: true });
-  if (videoStrip) videoStrip.addEventListener('scroll', () => updateCounter('video', videoStrip, videoInfo), { passive: true });
+  galleryItems.forEach((item, i) => {
+    item.addEventListener('click', () => openLightbox(i));
+  });
 
-  document.querySelectorAll('.nav-arrow').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.target;
-      const dir = parseInt(btn.dataset.dir);
-      const strip = target === 'gallery' ? galleryStrip : videoStrip;
-      const info = target === 'gallery' ? galleryInfo : videoInfo;
-      if (!strip || !info.realCount) return;
-      strip.scrollBy({ left: dir * info.getStep(), behavior: 'smooth' });
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.querySelector('.lightbox-nav.prev').addEventListener('click', (e) => { e.stopPropagation(); lightboxPrev(); });
+  lightbox.querySelector('.lightbox-nav.next').addEventListener('click', (e) => { e.stopPropagation(); lightboxNext(); });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrev();
+    if (e.key === 'ArrowRight') lightboxNext();
+  });
+
+  // ── Video Lightbox ──
+  const videoCards = document.querySelectorAll('.video-card');
+  const videoLightbox = document.getElementById('videoLightbox');
+  const videoEl = videoLightbox.querySelector('video');
+
+  videoCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const src = card.dataset.video;
+      if (!src) return;
+      videoEl.src = src;
+      videoLightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      videoEl.play().catch(() => {});
     });
   });
 
-  updateCounter('gallery', galleryStrip, galleryInfo);
-  updateCounter('video', videoStrip, videoInfo);
+  function closeVideoLightbox() {
+    videoLightbox.classList.remove('active');
+    videoEl.pause();
+    videoEl.src = '';
+    document.body.style.overflow = '';
+  }
+
+  videoLightbox.querySelector('.video-lightbox-close').addEventListener('click', closeVideoLightbox);
+  videoLightbox.addEventListener('click', (e) => { if (e.target === videoLightbox) closeVideoLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && videoLightbox.classList.contains('active')) closeVideoLightbox();
+  });
+
+  // ── Nav active state on scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.offsetTop - 100;
+      if (window.scrollY >= top) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+    });
+  }, { passive: true });
 </script>
 
 </body>
