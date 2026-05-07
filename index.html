@@ -781,6 +781,10 @@
     </div>
     <div class="video-strip reveal">
         <div class="video-card">
+            <video src="VIDEO1.mp4" muted loop playsinline preload="metadata"></video>
+            <p class="video-card-title">作品一</p>
+        </div>
+        <div class="video-card">
             <video src="VIDEO2.mp4" poster="VIDEO1.jpg" muted loop playsinline preload="metadata"></video>
             <p class="video-card-title">作品二</p>
         </div>
@@ -881,8 +885,8 @@
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-</script>
-    // Video hover play/pause
+
+  // Video hover play/pause
   document.querySelectorAll('.video-card video').forEach(video => {
     video.addEventListener('mouseenter', () => video.play());
     video.addEventListener('mouseleave', () => {
@@ -890,5 +894,7 @@
       video.currentTime = 0;
     });
   });
+</script>
+
 </body>
 </html>
