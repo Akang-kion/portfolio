@@ -1890,18 +1890,20 @@ section {
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 <script>
   // ── HLS Video Init (project cards) ──
-  document.querySelectorAll('.project-video-wrap video').forEach(video => {
-    const src = video.getAttribute('src');
-    if (src && src.includes('stream.mux.com')) {
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        // Safari native HLS
-        video.src = src;
-      } else if (Hls.isSupported()) {
-        const hls = new Hls({ maxBufferLength: 10 });
-        hls.loadSource(src);
-        hls.attachMedia(video);
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.project-video-wrap video').forEach(function(video) {
+      var src = video.getAttribute('src');
+      if (src && src.indexOf('stream.mux.com') !== -1) {
+        if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          // Safari native HLS
+          video.src = src;
+        } else if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+          var hls = new Hls({ maxBufferLength: 10 });
+          hls.loadSource(src);
+          hls.attachMedia(video);
+        }
       }
-    }
+    });
   });
 
   // ── Scroll Reveal ──
