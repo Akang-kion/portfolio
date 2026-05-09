@@ -1937,10 +1937,6 @@ section {
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  document.querySelector('.back-top').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
 
   // ── Skill Dots Animation ──
   const skillObserver = new IntersectionObserver((entries) => {
