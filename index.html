@@ -1400,7 +1400,25 @@ header[id] {
 section {
   position: relative;
 }
-</style>
+
+    /* Video loading indicator */
+    .project-video-wrap { position: relative; }
+    .project-video-wrap video { background: #000; }
+    .project-video-wrap::before {
+      content: '加载中…';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #999;
+      font-size: 0.85rem;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .project-video-wrap:has(video[ready])::before,
+    .project-video-wrap:has(video:not([src]))::before { display: none; }
+
+  </style>
 </head>
 
 <body>
@@ -1876,26 +1894,39 @@ section {
 </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js">
+  // Mark videos as ready when they can play
+  document.querySelectorAll('.project-video-wrap video').forEach(function(v) {
+    v.addEventListener('canplay', function() { this.setAttribute('ready', ''); });
+  });
+
+</script>
 <script>
   // ── HLS Video Init (project cards) ──
   (function initMuxVideos() {
     var videos = document.querySelectorAll('.project-video-wrap video[data-mux-src]');
     videos.forEach(function(video) {
       video.setAttribute('data-hls-init', '1');
-        if (!video.hasAttribute('playsinline')) video.setAttribute('playsinline', '');
-        if (!video.hasAttribute('webkit-playsinline')) video.setAttribute('webkit-playsinline', '');
+      if (!video.hasAttribute('playsinline')) video.setAttribute('playsinline', '');
+      if (!video.hasAttribute('webkit-playsinline')) video.setAttribute('webkit-playsinline', '');
       var src = video.getAttribute('data-mux-src');
       if (!src) return;
       if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        // Safari native HLS
         video.src = src;
       } else if (window.Hls && Hls.isSupported()) {
-        var hls = new Hls({ maxBufferLength: 30, startFragPrefetch: true, capLevelToPlayerSize: false, startLevel: -1 });
+        var hls = new Hls({
+          maxBufferLength: 10,
+          backBufferLength: 5,
+          startFragPrefetch: true,
+          capLevelToPlayerSize: true,
+          startLevel: 0,
+          testBandwidth: false,
+          enableWorker: false,
+          lowLatencyMode: true
+        });
         hls.loadSource(src);
         hls.attachMedia(video);
       } else {
-        // Fallback: show error
         video.poster = '';
         video.controls = false;
         var p = document.createElement('p');
@@ -1917,7 +1948,7 @@ section {
           if (video.canPlayType('application/vnd.apple.mpegurl')) {
             video.src = src;
           } else if (window.Hls && Hls.isSupported()) {
-            var hls = new Hls({ maxBufferLength: 30, startFragPrefetch: true, capLevelToPlayerSize: false, startLevel: -1 });
+            var hls = new Hls({ maxBufferLength: 10, backBufferLength: 5, startFragPrefetch: true, capLevelToPlayerSize: true, startLevel: 0, testBandwidth: false, enableWorker: false, lowLatencyMode: true });
             hls.loadSource(src);
             hls.attachMedia(video);
           }
