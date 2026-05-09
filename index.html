@@ -1902,7 +1902,7 @@ section {
         // Safari native HLS
         video.src = src;
       } else if (window.Hls && Hls.isSupported()) {
-        var hls = new Hls({ maxBufferLength: 15, startFragPrefetch: true });
+        var hls = new Hls({ maxBufferLength: 30, startFragPrefetch: true, capLevelToPlayerSize: false, startLevel: -1 });
         hls.loadSource(src);
         hls.attachMedia(video);
       } else {
@@ -1928,7 +1928,7 @@ section {
           if (video.canPlayType('application/vnd.apple.mpegurl')) {
             video.src = src;
           } else if (window.Hls && Hls.isSupported()) {
-            var hls = new Hls({ maxBufferLength: 15, startFragPrefetch: true });
+            var hls = new Hls({ maxBufferLength: 30, startFragPrefetch: true, capLevelToPlayerSize: false, startLevel: -1 });
             hls.loadSource(src);
             hls.attachMedia(video);
           }
