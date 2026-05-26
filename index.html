@@ -417,9 +417,11 @@ section {
 .about-text p:last-child { margin-bottom: 0; }
 .about-image img {
   width: 100%;
+  aspect-ratio: 4/5;
   display: block;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  object-fit: cover;
 }
 
 /* ─────────────────────────────
@@ -1201,8 +1203,7 @@ footer a:hover { color: var(--accent); }
       <p>无论是人像、纪实还是商业拍摄，我始终追求同一件事：让照片不只是记录，而是能让人停下来、看进去、感受到什么。</p>
     </div>
     <div class="about-image reveal">
-      <!-- 替换为你的个人照片 -->
-      <div style="width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,#1a1a1a,#222);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:0.85rem;">About Photo</div>
+      <img src="image/about.jpg" alt="马诒康">
     </div>
   </div>
 </section>
