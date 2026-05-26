@@ -149,6 +149,14 @@ body::before {
 .nav-overlay.active { display: block; }
 
 @media (max-width: 768px) {
+  .hero-content { padding: 0 1.5rem; padding-top: 30vh; }
+  .hero-title { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+  .hero-subtitle { font-size: 0.9rem; }
+  .hero-tagline { font-size: 0.85rem; }
+  .hero-label { font-size: 0.65rem; }
+  .hero-overlay {
+    background: linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.15) 100%);
+  }
   .nav-links {
     position: fixed;
     top: 0; right: -100%;
